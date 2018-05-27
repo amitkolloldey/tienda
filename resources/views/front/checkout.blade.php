@@ -47,9 +47,9 @@
                 @if (Session::has('message'))
                     <div class="alert alert-info">{{ Session::get('message') }}</div>
                 @endif
+                @if($cartItems->count()>0)
+                    <div class="order-detail-content">
 
-                <div class="order-detail-content">
-                    @if($cartItems->count()>0)
                         <div class="heading-counter warning">Order Details:
                             <span>{{$cartItems->count()}} Item</span>
                         </div>
@@ -72,8 +72,10 @@
                                 }}" alt="Product"></a>
                                     </td>
                                     <td class="cart_description">
-                                        <p class="product-name"><a href="{{$product->model->slug}}">{{$product->name}} </a></p>
-                                        <small class="cart_ref">Item Code : #{{$product->model->product_code}}</small><br>
+                                        <p class="product-name"><a
+                                                    href="{{$product->model->slug}}">{{$product->name}} </a></p>
+                                        <small class="cart_ref">Item Code : #{{$product->model->product_code}}</small>
+                                        <br>
                                     </td>
                                     <td class="price"><span>${{$product->price}}</span></td>
                                     <td class="qty">
@@ -89,8 +91,6 @@
                                 <tr>
                                     <td>Cart Is Empty!!</td>
                                 </tr>
-
-
                             @endforelse
                             </tbody>
                             <tfoot>
@@ -108,249 +108,287 @@
                             </tr>
                             </tfoot>
                         </table>
-                    @else
-                        <div class="alert alert-info"><p>Cart Is Empty!!</p></div>
-                    @endif
-                </div>
-                <h3 class="checkout-sep">Billing And Shipping Information</h3>
-                <div class="box-border">
-                    <ul>
-                        <li class="row">
 
-                            <div class="col-sm-6">
+                    </div>
+                    <div class="box-border">
+                        @if(count($errors) > 0)
+                            @foreach ($errors->all() as $error)
+                                <div class="alert-danger alert">{{ $error }}</div>
+                            @endforeach
+                        @endif
+                        <form action="{{route('checkout.store')}}" id="payment-form" method="POST">
+                            {{csrf_field()}}
+                            <h3 class="checkout-sep">Billing And Shipping Information</h3>
+                            <ul>
+                                <li class="row">
 
-                                <label for="first_name_1" class="required">First Name</label>
-                                <input class="input form-control" type="text" name="" id="first_name_1">
+                                    <div class="col-sm-6">
 
-                            </div><!--/ [col] -->
+                                        <label for="first_name" class="required">First Name</label>
+                                        <input class="input form-control" type="text" name="first_name"
+                                               id="first_name">
 
-                            <div class="col-sm-6">
+                                    </div><!--/ [col] -->
 
-                                <label for="last_name_1" class="required">Last Name</label>
-                                <input class="input form-control" type="text" name="" id="last_name_1">
+                                    <div class="col-sm-6">
 
-                            </div><!--/ [col] -->
+                                        <label for="last_name" class="required">Last Name</label>
+                                        <input class="input form-control" type="text" name="last_name" id="last_name">
 
-                        </li><!--/ .row -->
+                                    </div><!--/ [col] -->
 
-                        <li class="row">
+                                </li><!--/ .row -->
 
-                            <div class="col-sm-6">
+                                <li class="row">
 
-                                <label for="company_name_1">Company Name</label>
-                                <input class="input form-control" type="text" name="" id="company_name_1">
 
-                            </div><!--/ [col] -->
+                                    <div class="col-sm-12">
 
-                            <div class="col-sm-6">
+                                        <label for="email_address" class="required">Email Address</label>
+                                        <input class="input form-control" type="email" name="email_address"
+                                               id="email_address">
 
-                                <label for="email_address_1" class="required">Email Address</label>
-                                <input class="input form-control" type="text" name="" id="email_address_1">
+                                    </div><!--/ [col] -->
 
-                            </div><!--/ [col] -->
+                                </li><!--/ .row -->
 
-                        </li><!--/ .row -->
 
-                        <li class="row">
+                                <li class="row">
 
-                            <div class="col-xs-12">
+                                    <div class="col-sm-6">
 
-                                <label for="address_1" class="required">Address</label>
-                                <input class="input form-control" type="text" name="" id="address_1">
+                                        <label for="city" class="required">City</label>
+                                        <input class="input form-control" type="text" name="city" id="city">
 
-                            </div><!--/ [col] -->
+                                    </div><!--/ [col] -->
 
-                        </li><!--/ .row -->
+                                    <div class="col-sm-6">
 
-                        <li class="row">
+                                        <label class="required">Country</label>
 
-                            <div class="col-sm-6">
+                                        <div class="custom_select">
 
-                                <label for="city_1" class="required">City</label>
-                                <input class="input form-control" type="text" name="" id="city_1">
+                                            <select name="country" class="countries order-alpha input form-control"
+                                                    id="countryId">
+                                                <option value="">Select Country</option>
+                                            </select>
 
-                            </div><!--/ [col] -->
+                                        </div>
 
-                            <div class="col-sm-6">
+                                    </div><!--/ [col] -->
 
-                                <label class="required">State/Province</label>
+                                </li><!--/ .row -->
 
-                                <div class="custom_select">
+                                <li class="row">
 
-                                    <select class="input form-control" name="">
+                                    <div class="col-sm-6">
 
-                                        <option value="Alabama">Alabama</option>
-                                        <option value="Illinois">Illinois</option>
-                                        <option value="Kansas">Kansas</option>
+                                        <label for="post_code" class="required">Zip/Postal Code</label>
+                                        <input class="input form-control" type="text" name="post_code" id="post_code">
 
-                                    </select>
+                                    </div><!--/ [col] -->
 
+                                    <div class="col-sm-6">
+
+                                        <label class="required">State</label>
+
+                                        <div class="custom_select">
+                                            <select name="state" class="states order-alpha input form-control"
+                                                    id="stateId">
+                                                <option value="">Select State</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div><!--/ [col] -->
+
+                                </li><!--/ .row -->
+                                <li class="row">
+
+                                    <div class="col-xs-12">
+
+                                        <label for="address" class="required">Address</label>
+                                        <textarea class="input form-control" type="text" name="address" id="address"
+                                        ></textarea>
+
+                                    </div><!--/ [col] -->
+
+                                </li><!--/ .row -->
+                                <li class="row">
+
+                                    <div class="col-sm-6">
+
+                                        <label for="phone" class="required">Telephone</label>
+                                        <input class="input form-control" type="tel" name="phone" id="phone">
+
+                                    </div><!--/ [col] -->
+
+                                    <div class="col-sm-6">
+
+                                        <label for="alt_phone">Alternative Phone</label>
+                                        <input class="input form-control" type="tel" name="alt_phone" id="alt_phone">
+
+                                    </div><!--/ [col] -->
+
+                                </li><!--/ .row -->
+
+                            </ul>
+                            <br>
+                            <h3 class="checkout-sep">Payment Information</h3>
+                            <ul>
+                                <li>
+                                    <label for="payment_option"><input type="radio" checked name="payment_option"
+                                                                       id="cash_on_delivery"
+                                                                       onclick="radio_cash_on_delivery()" selected
+                                                                       value="cod">
+                                        Cash
+                                        On Delivery</label>
+                                </li>
+                                <li>
+                                    <label for="payment_option"><input type="radio" name="payment_option"
+                                                                       id="credit_card_option"
+                                                                       onclick="radio_credit_card
+                                                                       ()" value="stripe"> Credit card</label>
+                                </li>
+                            </ul>
+
+                            <div id="credit_card">
+
+                                <div class="form-row">
+                                    <label for="name_on_card">
+                                        Cardholder Name
+                                    </label>
+                                    <div id="name_on_card">
+                                        <input type="text" class="input form-control" name="name_on_card">
+                                    </div>
+
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert"></div>
+                                </div>
+                                <div class="form-row">
+                                    <label for="card-element">
+                                        Credit or debit card
+                                    </label>
+                                    <div id="card-element">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert"></div>
                                 </div>
 
-                            </div><!--/ [col] -->
 
-                        </li><!--/ .row -->
-
-                        <li class="row">
-
-                            <div class="col-sm-6">
-
-                                <label for="postal_code_1" class="required">Zip/Postal Code</label>
-                                <input class="input form-control" type="text" name="" id="postal_code_1">
-
-                            </div><!--/ [col] -->
-
-                            <div class="col-sm-6">
-
-                                <label class="required">Country</label>
-
-                                <div class="custom_select">
-
-                                    <select class="input form-control" name="">
-
-                                        <option value="USA">USA</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="Austria">Austria</option>
-                                        <option value="Argentina">Argentina</option>
-                                        <option value="Canada">Canada</option>
-
-                                    </select>
-
-                                </div>
-
-                            </div><!--/ [col] -->
-
-                        </li><!--/ .row -->
-
-                        <li class="row">
-
-                            <div class="col-sm-6">
-
-                                <label for="telephone_1" class="required">Telephone</label>
-                                <input class="input form-control" type="text" name="" id="telephone_1">
-
-                            </div><!--/ [col] -->
-
-                            <div class="col-sm-6">
-
-                                <label for="fax_1">Fax</label>
-                                <input class="input form-control" type="text" name="" id="fax_1">
-
-                            </div><!--/ [col] -->
-
-                        </li><!--/ .row -->
-
-                    </ul>
-                    <button class="button">Continue</button>
-                </div>
-                <h3 class="checkout-sep">Payment Information</h3>
-                <div class="box-border">
-                    <ul>
-                        <li>
-                            <label for="radio_payment_option"><input type="radio" checked name="radio_payment_option"
-                                                                     id="radio_cash_on_delivery"
-                                                                     onclick="radio_cash_on_delivery()" selected> Cash
-                                On Delivery</label>
-                        </li>
-                        <li>
-                            <label for="radio_payment_option"><input type="radio" name="radio_payment_option" id="radio_credit_card" onclick="radio_credit_card()">
-                                Credit card</label>
-                        </li>
-                    </ul>
-                    <div id="credit_card">
-                        <script src="https://js.stripe.com/v3/"></script>
-
-                        <form action="/charge" method="post" id="payment-form">
-                            <div class="form-row">
-                                <label for="card-element">
-                                    Credit or debit card
-                                </label>
-                                <div id="card-element">
-                                    <!-- A Stripe Element will be inserted here. -->
-                                </div>
-
-                                <!-- Used to display form errors. -->
-                                <div id="card-errors" role="alert"></div>
                             </div>
-
-                            <button>Submit Payment</button>
+                            <hr>
+                            <div class="cart_navigation">
+                                {!! NoCaptcha::display(['data-theme' => 'dark']) !!}
+                                <button class="next-btn" type="submit" id="complete-order">Complete Order</button>
+                            </div>
                         </form>
                     </div>
-                </div>
+                @else
+                    <div class="alert alert-info"><p>Cart Is Empty!!</p></div>
+                @endif
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
+    {!! NoCaptcha::renderJs() !!}
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
-        document.getElementById('credit_card').style.display ='none';
-        function radio_cash_on_delivery(){
-            document.getElementById('credit_card').style.display ='none';
+        document.getElementById('credit_card').style.display = 'none';
+
+        function radio_cash_on_delivery() {
+            document.getElementById('credit_card').style.display = 'none';
         }
-        function radio_credit_card(){
+
+        function radio_credit_card() {
             document.getElementById('credit_card').style.display = 'block';
-        }
 
-    </script>
-    <script>
+            // Create a Stripe client.
+            var stripe = Stripe('pk_test_En0qw8rM8y1PNnTSI3CXU41I');
 
-        // Create a Stripe client.
-        var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+            // Create an instance of Elements.
+            var elements = stripe.elements();
 
-        // Create an instance of Elements.
-        var elements = stripe.elements();
-
-        // Custom styling can be passed to options when creating an Element.
-        // (Note that this demo uses a wider set of styles than the guide below.)
-        var style = {
-            base: {
-                color: '#32325d',
-                lineHeight: '18px',
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                    color: '#aab7c4'
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            var style = {
+                base: {
+                    color: '#32325d',
+                    lineHeight: '18px',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
                 }
-            },
-            invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-            }
-        };
+            };
 
-        // Create an instance of the card Element.
-        var card = elements.create('card', {style: style});
+            // Create an instance of the card Element.
+            var card = elements.create('card', {style: style, hidePostalCode: true});
 
-        // Add an instance of the card Element into the `card-element` <div>.
-        card.mount('#card-element');
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
 
-        // Handle real-time validation errors from the card Element.
-        card.addEventListener('change', function(event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
-
-        // Handle form submission.
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            stripe.createToken(card).then(function(result) {
-                if (result.error) {
-                    // Inform the user if there was an error.
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
+            // Handle real-time validation errors from the card Element.
+            card.addEventListener('change', function (event) {
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
                 } else {
-                    // Send the token to your server.
-                    stripeTokenHandler(result.token);
+                    displayError.textContent = '';
                 }
             });
-        });
+
+            // Handle form submission.
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Disable the submit button to prevent repeated clicks
+                document.getElementById('complete-order').disabled = true;
+                var options = {
+                    name: document.getElementById('name_on_card').value,
+                    address_line1: document.getElementById('address').value,
+                    address_city: document.getElementById('city').value,
+                    address_state: document.getElementById('stateId').value,
+                    address_zip: document.getElementById('post_code').value
+                };
+                stripe.createToken(card, options).then(function (result) {
+                    if (result.error) {
+                        // Inform the user if there was an error
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                        // Enable the submit button
+                        document.getElementById('complete-order').disabled = false;
+                    } else {
+                        // Send the token to your server
+                        stripeTokenHandler(result.token);
+                    }
+                });
+
+                function stripeTokenHandler(token) {
+                    // Insert the token ID into the form so it gets submitted to the server
+                    var form = document.getElementById('payment-form');
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', token.id);
+                    form.appendChild(hiddenInput);
+                    // Submit the form
+                    form.submit();
+                }
+            });
+        }
+
     </script>
-    @endsection
+
+    <script src="//geodata.solutions/includes/countrystate.js"></script>
+@endsection

@@ -32,7 +32,7 @@ class CartController extends Controller
     {
         $product =Product::findOrFail($pro_id);
         Cart::add(['id' => $pro_id, 'name' => $product->name, 'qty' => 1, 'price' => $product->price])->associate('App\Product');
-        return redirect(route('cart.index'))->withMessage($product->name. " Added To Cart");
+        return back();
     }
 
     /**

@@ -5269,12 +5269,11 @@ span.notify-right{
 
 div#credit_card {
     margin:  10px 0;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 div#card-element {
     padding:  10px;
-    margin:  10px 0;
     border: 1px solid #ddd;
 }
 
@@ -5289,4 +5288,10 @@ div#card-element {
 #credit_card button:hover {
     background:  #FF3366;
     border-color: #FF3366;
+}
+button.next-btn {
+    background: #FF3366;
+    padding: 10px 20px;
+    color:  #fff;
+    float: right;
 }

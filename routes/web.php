@@ -19,6 +19,9 @@ Route::get('/product/{slug}', 'productsController@show')->name('single.product')
 Route::resource('/cart', 'CartController');
 Route::resource('/checkout', 'CheckoutController')->middleware('auth');
 Route::get('/cart/create/{pro_id}', 'CartController@create')->name('cart.product.create');
+Route::get('/orders', function (){
+    return view('front.orders');
+})->name('order.index');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

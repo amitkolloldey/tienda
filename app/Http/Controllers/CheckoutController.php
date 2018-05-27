@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,32 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $this->validate($request,[
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email_address' => 'required|email|max:255',
+            'city' => 'required|max:255',
+            'country' => 'required|max:255',
+            'state' => 'required|max:255',
+            'post_code' => 'required|numeric',
+        ]);
+        try {
+            $charge = Stripe::charges()->create([
+                'amount' => Cart::total(),
+                'currency' => 'USD',
+                'source' => $request->stripeToken,
+                'description' => 'Tienda Order',
+                'receipt_email' => $request->email_address,
+                'metadata' => [
+                    //'product' => Cart::content(),
+                ],
+            ]);
+
+            Cart::destroy();
+            return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
+        } catch (Exception $e)  {
+        }
     }
 
     /**
