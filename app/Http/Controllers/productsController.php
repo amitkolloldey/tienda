@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductCategory;
 use Illuminate\Http\Request;
 
 class productsController extends Controller
@@ -15,9 +16,22 @@ class productsController extends Controller
     public function index()
     {
         $products = Product::where('status','published')->paginate(18);
-       return view('front.shop',compact('products'));
+        $product_categories = ProductCategory::whereNull('parent_id')->get();
+        return view('front.shop',compact('products','product_categories'));
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function category($category_slug)
+    {
+        $product_categories = ProductCategory::whereNull('parent_id')->get();
+        $product_category = ProductCategory::findBySlugOrFail($category_slug);
+        $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->paginate(18);
+        return view('front.category',compact('product_category','product_categories','category_products'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -84,4 +98,8 @@ class productsController extends Controller
     {
         //
     }
+
+
+
+
 }

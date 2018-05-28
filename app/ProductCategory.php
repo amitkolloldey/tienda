@@ -13,12 +13,17 @@ class ProductCategory extends Model
 
    protected $guarded=[];
 
-    public function product(){
-        return $this->hasMany('App\Product');
+    public function products(){
+        return $this->belongsToMany('App\Product','product_category');
     }
     public function parentId()
     {
-        return $this->belongsTo('App\ProductCategory');
+        return $this->belongsTo(self::class);
+    }
+
+    public function sub_categories($parent_id)
+    {
+        return $this::where('parent_id',$parent_id)->get();
     }
 
     public function sluggable()

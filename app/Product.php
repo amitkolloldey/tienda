@@ -14,9 +14,8 @@ class Product extends Model
     protected $guarded=[];
 
     public function product_category(){
-        return $this->belongsTo('App\ProductCategory','products_category_id');
+        return $this->belongsToMany('App\ProductCategory');
     }
-
 
     public function sluggable()
     {

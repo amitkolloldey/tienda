@@ -1,6 +1,6 @@
 @extends('front.layout.template')
 @section('title')
-    Cart
+    Orders
 @endsection
 @section('bodyclass')category-page @endsection
 @section('content')

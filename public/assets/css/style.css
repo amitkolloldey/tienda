@@ -5295,3 +5295,11 @@ button.next-btn {
     color:  #fff;
     float: right;
 }
+.level-3rd i.fa.fa-angle-right {
+    line-height:  24px;
+    margin-left:  10px;
+}
+
+li.level-3rd {
+    border-bottom: 1px solid #eee;
+}

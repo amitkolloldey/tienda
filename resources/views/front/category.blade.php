@@ -1,6 +1,6 @@
 @extends('front.layout.template')
 @section('title')
-    Shop
+    {{$product_category->name}}
 @endsection
 @section('bodyclass')category-page @endsection
 @section('content')
@@ -9,15 +9,17 @@
             <!-- row -->
             <div class="row">
                 <!-- Left colunm -->
-                @include('front.partials.shopsidebar',['product_categories' => $product_categories])
-                <!-- ./left colunm -->
+            @include('front.partials.shopsidebar',['product_categories' => $product_categories])
+            <!-- ./left colunm -->
                 <!-- Center colunm-->
                 <div class="center_column col-xs-12 col-sm-9" id="center_column">
                     <!-- category-slider -->
                     <div class="category-slider">
                         <ul>
                             <li>
-                                <img src="assets/data/category-slide.jpg" alt="category-slider">
+
+                                <img src="{!! url('storage').'/'.$product_category->image!!}"
+                                     alt="{{$product_category->name}}">
                             </li>
                         </ul>
                     </div>
@@ -25,7 +27,7 @@
                     <!-- view-product-list-->
                     <div id="view-product-list" class="view-product-list">
                         <h2 class="page-heading">
-                            <span class="page-heading-title">Shop</span>
+                            <span class="page-heading-title">{{$product_category->name}}</span>
                         </h2>
                         <ul class="display-product-option">
                             <li class="view-as-grid selected">
@@ -38,65 +40,65 @@
                         <!-- PRODUCT LIST -->
                         <ul class="row product-list grid">
 
-                            @forelse($products as $product)
-                            <li class="col-sx-12 col-sm-4">
-                                <div class="product-container">
-                                    <div class="left-block">
-                                        <a href="{{route('single.product',$product->slug)}}">
-                                            <img class="img-responsive" alt="{{$product->name}}"
-                                                 src="{{url('storage/'.$product->image)}}"
-                                                 width="268"
-                                                 height="327"/>
-                                        </a>
-                                        <div class="quick-view">
-                                            <a title="Add to my wishlist" class="heart" href="#"></a>
-                                            <a title="Add to compare" class="compare" href="#"></a>
-                                            <a title="Quick view" class="search" href="#" data-toggle="modal"
-                                               data-target="#quickview-{{$product->id}}"></a>
-                                            <!-- Trigger the modal with a button -->
+                            @forelse($category_products as $product)
+                                <li class="col-sx-12 col-sm-4">
+                                    <div class="product-container">
+                                        <div class="left-block">
+                                            <a href="{{route('single.product',$product->slug)}}">
+                                                <img class="img-responsive" alt="{{$product->name}}"
+                                                     src="{{url('storage/'.$product->image)}}"
+                                                     width="268"
+                                                     height="327"/>
+                                            </a>
+                                            <div class="quick-view">
+                                                <a title="Add to my wishlist" class="heart" href="#"></a>
+                                                <a title="Add to compare" class="compare" href="#"></a>
+                                                <a title="Quick view" class="search" href="#" data-toggle="modal"
+                                                   data-target="#quickview-{{$product->id}}"></a>
+                                                <!-- Trigger the modal with a button -->
 
-                                            <!-- Modal -->
+                                                <!-- Modal -->
 
-                                        </div>
-                                        <div class="add-to-cart">
-                                            @if($product->quantity > 0 )
-                                            <a title="Add to Cart" href="{{route('cart.product.create',$product->id)}}">Add to
-                                                Cart</a>
-                                                @else
-                                                <h2 title="Sold Out">Sold Out</h2>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="right-block">
-                                        <h5 class="product-name"><a href="#">{{$product->name}}</a></h5>
-                                        <div class="product-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                        </div>
-                                        <div class="content_price">
-                                            @if($product->sale_price)
-                                                <span class="price product-price">${{$product->sale_price}}</span>
-                                                <span class="price old-price">${{$product->price}}</span>
-                                            @else
-                                                <span class="price product-price">${{$product->price}}</span>
-                                            @endif
-                                        </div>
-                                        <div class="info">
-                                            <p>Code: {{$product->product_code}}</p>
-                                            <p class="availability">Availability:
+                                            </div>
+                                            <div class="add-to-cart">
                                                 @if($product->quantity > 0 )
-                                                    <span>In stock</span>
+                                                    <a title="Add to Cart" href="{{route('cart.product.create',$product->id)}}">Add to
+                                                        Cart</a>
                                                 @else
-                                                    <span>Out Of stock</span>
+                                                    <h2 title="Sold Out">Sold Out</h2>
                                                 @endif
-                                            </p>
+                                            </div>
+                                        </div>
+                                        <div class="right-block">
+                                            <h5 class="product-name"><a href="#">{{$product->name}}</a></h5>
+                                            <div class="product-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+                                            <div class="content_price">
+                                                @if($product->sale_price)
+                                                    <span class="price product-price">${{$product->sale_price}}</span>
+                                                    <span class="price old-price">${{$product->price}}</span>
+                                                @else
+                                                    <span class="price product-price">${{$product->price}}</span>
+                                                @endif
+                                            </div>
+                                            <div class="info">
+                                                <p>Code: {{$product->product_code}}</p>
+                                                <p class="availability">Availability:
+                                                    @if($product->quantity > 0 )
+                                                        <span>In stock</span>
+                                                    @else
+                                                        <span>Out Of stock</span>
+                                                    @endif
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                                 <div id="quickview-{{$product->id}}" class="modal fade"
                                      role="dialog">
                                     <div class="modal-dialog">
@@ -138,7 +140,7 @@
                                     </div>
                                 </div>
                             @empty
-                            <h2>No Products</h2>
+                                <h2>No Products</h2>
                             @endforelse
                         </ul>
                         <!-- ./PRODUCT LIST -->
@@ -147,7 +149,7 @@
                     <div class="sortPagiBar">
                         <div class="bottom-pagination">
                             <nav>
-                                {{$products->links()}}
+                                {{$category_products->links()}}
                             </nav>
                         </div>
                         <div class="show-product-item">

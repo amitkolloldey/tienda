@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cartalyst\Stripe\Exception\CardErrorException;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -41,6 +42,10 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+
+        $contents = Cart::content()->map(function ($item) {
+            return $item->model->slug.', '.$item->qty;
+        })->values()->toJson();
         $this->validate($request,[
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -49,6 +54,7 @@ class CheckoutController extends Controller
             'country' => 'required|max:255',
             'state' => 'required|max:255',
             'post_code' => 'required|numeric',
+            //'g-recaptcha-response' => 'required|captcha'
         ]);
         try {
             $charge = Stripe::charges()->create([
@@ -58,13 +64,15 @@ class CheckoutController extends Controller
                 'description' => 'Tienda Order',
                 'receipt_email' => $request->email_address,
                 'metadata' => [
-                    //'product' => Cart::content(),
+                    'contents' => $contents,
+                    'quantity' => Cart::instance('default')->count(),
                 ],
             ]);
 
             Cart::destroy();
             return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
-        } catch (Exception $e)  {
+        } catch (CardErrorException $e) {
+            return back()->withErrors('Error! ' . $e->getMessage());
         }
     }
 

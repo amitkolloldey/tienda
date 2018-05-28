@@ -44,12 +44,16 @@
             </h2>
             <!-- ../page heading-->
             <div class="page-content checkout-page">
-                @if (Session::has('message'))
-                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                @if(count($errors) > 0)
+                    @foreach ($errors->all() as $error)
+                        <div class="alert-danger alert">{{ $error }}</div>
+                    @endforeach
                 @endif
                 @if($cartItems->count()>0)
                     <div class="order-detail-content">
-
+                        @if (Session::has('message'))
+                            <div class="alert alert-info">{{ Session::get('message') }}</div>
+                        @endif
                         <div class="heading-counter warning">Order Details:
                             <span>{{$cartItems->count()}} Item</span>
                         </div>
@@ -69,7 +73,7 @@
                                 <tr>
                                     <td class="cart_product">
                                         <a href="{{$product->model->slug}}"><img src="{{url('storage/'.$product->model->image)
-                                }}" alt="Product"></a>
+                                }}" alt="{{$product->name}}"></a>
                                     </td>
                                     <td class="cart_description">
                                         <p class="product-name"><a
@@ -111,11 +115,7 @@
 
                     </div>
                     <div class="box-border">
-                        @if(count($errors) > 0)
-                            @foreach ($errors->all() as $error)
-                                <div class="alert-danger alert">{{ $error }}</div>
-                            @endforeach
-                        @endif
+
                         <form action="{{route('checkout.store')}}" id="payment-form" method="POST">
                             {{csrf_field()}}
                             <h3 class="checkout-sep">Billing And Shipping Information</h3>
@@ -126,14 +126,15 @@
 
                                         <label for="first_name" class="required">First Name</label>
                                         <input class="input form-control" type="text" name="first_name"
-                                               id="first_name">
+                                               id="first_name" value="{{old('first_name')}}">
 
                                     </div><!--/ [col] -->
 
                                     <div class="col-sm-6">
 
                                         <label for="last_name" class="required">Last Name</label>
-                                        <input class="input form-control" type="text" name="last_name" id="last_name">
+                                        <input class="input form-control" type="text" name="last_name" id="last_name"
+                                               value="{{old('last_name')}}">
 
                                     </div><!--/ [col] -->
 
@@ -146,7 +147,7 @@
 
                                         <label for="email_address" class="required">Email Address</label>
                                         <input class="input form-control" type="email" name="email_address"
-                                               id="email_address">
+                                               id="email_address"  value="{{old('email_address')}}">
 
                                     </div><!--/ [col] -->
 
@@ -158,7 +159,8 @@
                                     <div class="col-sm-6">
 
                                         <label for="city" class="required">City</label>
-                                        <input class="input form-control" type="text" name="city" id="city">
+                                        <input class="input form-control" type="text" name="city" id="city"
+                                               value="{{old('city')}}">
 
                                     </div><!--/ [col] -->
 
@@ -184,7 +186,8 @@
                                     <div class="col-sm-6">
 
                                         <label for="post_code" class="required">Zip/Postal Code</label>
-                                        <input class="input form-control" type="text" name="post_code" id="post_code">
+                                        <input class="input form-control" type="text" name="post_code" id="post_code"
+                                               value="{{old('post_code')}}">
 
                                     </div><!--/ [col] -->
 
@@ -208,8 +211,7 @@
                                     <div class="col-xs-12">
 
                                         <label for="address" class="required">Address</label>
-                                        <textarea class="input form-control" type="text" name="address" id="address"
-                                        ></textarea>
+                                        <textarea class="input form-control" type="text" name="address" id="address">{{old('address')}}</textarea>
 
                                     </div><!--/ [col] -->
 
@@ -218,15 +220,16 @@
 
                                     <div class="col-sm-6">
 
-                                        <label for="phone" class="required">Telephone</label>
-                                        <input class="input form-control" type="tel" name="phone" id="phone">
+                                        <label for="phone" class="required" >Telephone</label>
+                                        <input class="input form-control" type="tel" name="phone" id="phone"
+                                               value="{{old('phone')}}">
 
                                     </div><!--/ [col] -->
 
                                     <div class="col-sm-6">
 
                                         <label for="alt_phone">Alternative Phone</label>
-                                        <input class="input form-control" type="tel" name="alt_phone" id="alt_phone">
+                                        <input class="input form-control" type="tel" name="alt_phone" id="alt_phone"  value="{{old('alt_phone')}}">
 
                                     </div><!--/ [col] -->
 
@@ -237,23 +240,16 @@
                             <h3 class="checkout-sep">Payment Information</h3>
                             <ul>
                                 <li>
-                                    <label for="payment_option"><input type="radio" checked name="payment_option"
-                                                                       id="cash_on_delivery"
-                                                                       onclick="radio_cash_on_delivery()" selected
-                                                                       value="cod">
-                                        Cash
-                                        On Delivery</label>
+                                    <label for="payment_option">
+                                        <input type="radio" checked name="payment_option" id="cash_on_delivery" onclick="radio_cash_on_delivery()" selected value="cod"> Cash On Delivery</label>
                                 </li>
                                 <li>
-                                    <label for="payment_option"><input type="radio" name="payment_option"
-                                                                       id="credit_card_option"
-                                                                       onclick="radio_credit_card
-                                                                       ()" value="stripe"> Credit card</label>
+                                    <label for="payment_option">
+                                        <input type="radio" name="payment_option" id="credit_card_option" onclick="radio_credit_card()" value="stripe"> Credit card</label>
                                 </li>
                             </ul>
 
                             <div id="credit_card">
-
                                 <div class="form-row">
                                     <label for="name_on_card">
                                         Cardholder Name
@@ -276,8 +272,6 @@
                                     <!-- Used to display form errors. -->
                                     <div id="card-errors" role="alert"></div>
                                 </div>
-
-
                             </div>
                             <hr>
                             <div class="cart_navigation">
