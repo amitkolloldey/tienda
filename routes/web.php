@@ -20,6 +20,7 @@ Route::resource('/cart', 'CartController');
 Route::resource('/checkout', 'CheckoutController')->middleware('auth');
 Route::get('/cart/create/{pro_id}', 'CartController@create')->name('cart.product.create');
 Route::get('/category/{category_slug}', 'productsController@category')->name('product.category');
+Route::get('/price_filter', 'productsController@price_filter')->name('product.price_filter');
 Route::get('/orders', function (){
     return view('front.orders');
 })->name('order.index');

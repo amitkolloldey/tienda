@@ -122,10 +122,11 @@
 <script type="text/javascript" src="{{asset('assets/lib/jquery.bxslider/jquery.bxslider.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/owl.carousel/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/jquery.countdown/jquery.countdown.min.js')}}"></script>
-@yield('scripts')
-<script type="text/javascript" src="{{asset('assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/js/jquery.actual.min.js')}}"></script>
 
+<script type="text/javascript" src="{{asset('assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('assets/js/jquery.actual.min.js')}}"></script>
+@yield('scripts')
 <script type="text/javascript" src="{{asset('assets/js/theme-script.js')}}"></script>
 
 </body>

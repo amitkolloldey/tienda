@@ -25,6 +25,20 @@ class productsController extends Controller
         return view('front.shop',compact('products'));
     }
 
+
+    public function price_filter(Request $request)
+    {
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+        $products = Product::whereBetween('price', [$min_price, $max_price])->get();
+        if ($products) {
+            if (request()->ajax()) {
+                return view('front.filteredproducts',compact('products'));
+            }
+        }
+        return "Error";
+    }
+
     /**
      * Display a listing of the resource.
      *

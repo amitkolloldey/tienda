@@ -5364,3 +5364,35 @@ h2.no-product {
     line-height:  37px;
     margin-right: 10px;
 }
+.min {
+    font-weight: bold;
+}
+
+.max.pull-right {
+    font-weight: bold;
+}
+
+input#filter_price {
+    color:  #fff;
+    padding:  10px;
+    display:  inline-block;
+    background: #FF3366;
+}
+.layered-content.slider-range {
+    margin-bottom:  23px;
+    display: block;
+}
+
+ul.check-box-list {
+    margin-top:  30px;
+    padding:  20px;
+    border: 1px solid #ddd;
+}
+
+ul.check-box-list li {
+    padding: 5px 0;
+}
+
+ul.check-box-list a {
+    display: block;
+}
