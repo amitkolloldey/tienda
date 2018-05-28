@@ -27,5 +27,3 @@ Route::get('/orders', function (){
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
-
-Route::get('/cats', 'SidebarController@shop_sidebar_category');

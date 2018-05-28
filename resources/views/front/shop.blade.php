@@ -9,7 +9,7 @@
             <!-- row -->
             <div class="row">
                 <!-- Left colunm -->
-                @include('front.partials.shopsidebar',['product_categories' => $product_categories])
+                @include('front.partials.shopsidebar')
                 <!-- ./left colunm -->
                 <!-- Center colunm-->
                 <div class="center_column col-xs-12 col-sm-9" id="center_column">
@@ -27,6 +27,7 @@
                         <h2 class="page-heading">
                             <span class="page-heading-title">Shop</span>
                         </h2>
+
                         <ul class="display-product-option">
                             <li class="view-as-grid selected">
                                 <span>grid</span>
@@ -35,9 +36,25 @@
                                 <span>list</span>
                             </li>
                         </ul>
+                        <div class="clearfix">
+                            <div class="showing">Showing
+                                {{($products->currentpage()-1)*$products->perpage()+1}} to {{($products->currentpage()-1)
+                             * $products->perpage() + $products->count()}} of  {{$products->total()}} products
+                            </div>
+                            <div class="sorting">
+                                <p class="sort">
+                                    <span>Sort by:</span>
+                                    <a href="{{ route('shop.products', [ 'sortby' => 'newest_items'])}}">Newest
+                                        Items</a>
+                                    <a href="{{ route('shop.products', [ 'sortby' => 'best_selling'])}}">Bestselling</a>
+                                    <a href="{{ route('shop.products', ['sortby' => 'low_to_high']) }}">Low to High</a>
+                                    <a href="{{ route('shop.products', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                </p>
+                            </div>
+                        </div>
+
                         <!-- PRODUCT LIST -->
                         <ul class="row product-list grid">
-
                             @forelse($products as $product)
                             <li class="col-sx-12 col-sm-4">
                                 <div class="product-container">
@@ -142,30 +159,31 @@
                             @endforelse
                         </ul>
                         <!-- ./PRODUCT LIST -->
+                        <div class="clearfix">
+                            <div class="showing">Showing
+                                {{($products->currentpage()-1)*$products->perpage()+1}} to {{($products->currentpage()-1)
+                             * $products->perpage() + $products->count()}} of  {{$products->total()}} products
+                            </div>
+                            <div class="sorting">
+                                <p class="sort">
+                                    <span>Sort by:</span>
+                                    <a href="{{ route('shop.products',[ 'sortby' =>
+                                    'newest_items'])}}
+                                    }}">Newest
+                                        Items</a>
+                                    <a href="{{ route('shop.products', [ 'sortby' => 'best_selling'])}}">Bestselling</a>
+                                    <a href="{{ route('shop.products', ['sortby' => 'low_to_high']) }}">Low to High</a>
+                                    <a href="{{ route('shop.products', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <!-- ./view-product-list-->
                     <div class="sortPagiBar">
                         <div class="bottom-pagination">
                             <nav>
-                                {{$products->links()}}
+                                {{ $products->appends(request()->input())->links() }}
                             </nav>
-                        </div>
-                        <div class="show-product-item">
-                            <select name="">
-                                <option value="">Show 18</option>
-                                <option value="">Show 20</option>
-                                <option value="">Show 50</option>
-                                <option value="">Show 100</option>
-                            </select>
-                        </div>
-                        <div class="sort-product">
-                            <select>
-                                <option value="">Product Name</option>
-                                <option value="">Price</option>
-                            </select>
-                            <div class="sort-product-icon">
-                                <i class="fa fa-sort-alpha-asc"></i>
-                            </div>
                         </div>
                     </div>
                 </div>

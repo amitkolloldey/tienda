@@ -15,9 +15,14 @@ class productsController extends Controller
      */
     public function index()
     {
-        $products = Product::where('status','published')->paginate(18);
-        $product_categories = ProductCategory::whereNull('parent_id')->get();
-        return view('front.shop',compact('products','product_categories'));
+        if (request()->sortby == 'low_to_high') {
+            $products =Product::orderBy('price')->paginate(18);
+        } elseif (request()->sortby == 'high_to_low') {
+            $products = Product::orderBy('price', 'desc')->paginate(18);
+        }else{
+            $products = Product::where('status','published')->paginate(18);
+        }
+        return view('front.shop',compact('products'));
     }
 
     /**
@@ -27,10 +32,9 @@ class productsController extends Controller
      */
     public function category($category_slug)
     {
-        $product_categories = ProductCategory::whereNull('parent_id')->get();
         $product_category = ProductCategory::findBySlugOrFail($category_slug);
         $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->paginate(18);
-        return view('front.category',compact('product_category','product_categories','category_products'));
+        return view('front.category',compact('product_category','category_products'));
     }
     /**
      * Show the form for creating a new resource.

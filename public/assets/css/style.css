@@ -1137,12 +1137,6 @@ span.notify-right{
   color: #fff;
   border-color: #FF3366;
 }
-.box-vertical-megamenus .all-category span:after{
-    font: normal normal normal 14px/1 FontAwesome;
-    content: "\f105";
-    font-weight: bold;
-    margin-left: 20px;
-}
 
 .vertical-dropdown-menu{
   position: absolute;
@@ -5302,4 +5296,71 @@ button.next-btn {
 
 li.level-3rd {
     border-bottom: 1px solid #eee;
+}
+.showing {
+    margin-top: 20px;
+    float: left;
+    width: 30%;
+}
+.sorting {
+    float:  left;
+    width: 70%;
+    margin-top: 20px;
+}
+h2.no-product {
+    padding:  20px 0;
+    text-align:  center;
+    margin:  20px 0;
+    font-size: 25px;
+}
+.sorting .sort {
+    float: right;
+    padding-left: 25px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 2px
+}
+
+@media (max-width: 767px) {
+    .sorting .sort {
+        float: none;
+        clear: both
+    }
+}
+
+.sorting .sort span {
+    padding-right: 2px
+}
+
+.sorting .sort a {
+    color: #FF3366;
+    font-size: 14px;
+    border-bottom: 0;
+    margin-left: 20px
+}
+
+.sorting .sort a:hover {
+    border-bottom: 1px #FF3366 dotted
+}
+
+@media (max-width: 992px) {
+    .sorting .sort a {
+        margin-left: 10px
+    }
+}
+.open-cate a {
+    color: #000000;
+    display: block;
+}
+.open-cate a i{
+    line-height: 40px;
+    margin-left: 10px;
+}
+
+.open-cate a:hover {
+    color: #fff;
+}
+.vertical-menu-list i {
+    line-height:  37px;
+    margin-right: 10px;
 }

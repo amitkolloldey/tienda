@@ -9,7 +9,7 @@
             <!-- row -->
             <div class="row">
                 <!-- Left colunm -->
-            @include('front.partials.shopsidebar',['product_categories' => $product_categories])
+            @include('front.partials.shopsidebar')
             <!-- ./left colunm -->
                 <!-- Center colunm-->
                 <div class="center_column col-xs-12 col-sm-9" id="center_column">
@@ -17,18 +17,19 @@
                     <div class="category-slider">
                         <ul>
                             <li>
-
                                 <img src="{!! url('storage').'/'.$product_category->image!!}"
                                      alt="{{$product_category->name}}">
                             </li>
                         </ul>
                     </div>
                     <!-- ./category-slider -->
+
                     <!-- view-product-list-->
                     <div id="view-product-list" class="view-product-list">
                         <h2 class="page-heading">
                             <span class="page-heading-title">{{$product_category->name}}</span>
                         </h2>
+
                         <ul class="display-product-option">
                             <li class="view-as-grid selected">
                                 <span>grid</span>
@@ -36,7 +37,23 @@
                             <li class="view-as-list">
                                 <span>list</span>
                             </li>
+
                         </ul>
+                        <div class="clearfix">
+                            <div class="showing">Showing
+                                {{($category_products->currentpage()-1)*$category_products->perpage()+1}} to {{($category_products->currentpage()-1)
+                             * $category_products->perpage() + $category_products->count()}} of  {{$category_products->total()}} products
+                            </div>
+                            <div class="sorting">
+                                <p class="sort">
+                                    <span>Sort by:</span>
+                                    <a href="{{ route('product.category', [ 'sortby' => 'newest_items'])}}">Newest Items</a>
+                                    <a href="{{ route('product.category', ['sortby' => 'best_selling'])}}">Bestselling</a>
+                                    <a href="{{ route('product.category', ['sortby' => 'low_to_high']) }}">Low to High</a>
+                                    <a href="{{ route('product.category', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                </p>
+                            </div>
+                        </div>
                         <!-- PRODUCT LIST -->
                         <ul class="row product-list grid">
 
@@ -56,9 +73,7 @@
                                                 <a title="Quick view" class="search" href="#" data-toggle="modal"
                                                    data-target="#quickview-{{$product->id}}"></a>
                                                 <!-- Trigger the modal with a button -->
-
                                                 <!-- Modal -->
-
                                             </div>
                                             <div class="add-to-cart">
                                                 @if($product->quantity > 0 )
@@ -140,35 +155,34 @@
                                     </div>
                                 </div>
                             @empty
-                                <h2>No Products</h2>
+                                <h2 class="no-product">No Products</h2>
                             @endforelse
                         </ul>
                         <!-- ./PRODUCT LIST -->
+                        <div class="clearfix">
+                            <div class="showing">Showing
+                                {{($category_products->currentpage()-1)*$category_products->perpage()+1}} to {{($category_products->currentpage()-1)
+                             * $category_products->perpage() + $category_products->count()}} of  {{$category_products->total()}} products
+                            </div>
+                            <div class="sorting">
+                                <p class="sort">
+                                    <span>Sort by:</span>
+                                    <a href="{{ url('/', [ 'sortby' => 'newest_items'])}}">Newest Items</a>
+                                    <a href="{{ route('product.category', ['sortby' => 'best_selling'])}}">Bestselling</a>
+                                    <a href="{{ route('product.category', ['sortby' => 'low_to_high']) }}">Low to High</a>
+                                    <a href="{{ route('product.category', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <!-- ./view-product-list-->
                     <div class="sortPagiBar">
                         <div class="bottom-pagination">
                             <nav>
-                                {{$category_products->links()}}
+                                {{ $category_products->appends(request()->input())->links() }}
                             </nav>
                         </div>
-                        <div class="show-product-item">
-                            <select name="">
-                                <option value="">Show 18</option>
-                                <option value="">Show 20</option>
-                                <option value="">Show 50</option>
-                                <option value="">Show 100</option>
-                            </select>
-                        </div>
-                        <div class="sort-product">
-                            <select>
-                                <option value="">Product Name</option>
-                                <option value="">Price</option>
-                            </select>
-                            <div class="sort-product-icon">
-                                <i class="fa fa-sort-alpha-asc"></i>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <!-- ./ Center colunm -->

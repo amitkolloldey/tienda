@@ -276,7 +276,7 @@
                             <hr>
                             <div class="cart_navigation">
                                 {!! NoCaptcha::display(['data-theme' => 'dark']) !!}
-                                <button class="next-btn" type="submit" id="complete-order">Complete Order</button>
+                                <button class="next-btn" type="submit" id="complete-order">Place Order</button>
                             </div>
                         </form>
                     </div>

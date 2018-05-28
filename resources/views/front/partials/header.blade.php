@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
 
-                <a href="{{route('home')}}"><img alt="Tienda" src="{{url('storage/'.setting('site.logo'))}}"/></a>
+                <a href="{{route('home')}}"><img alt="{{setting('site.title')}}" src="{{url('storage/'.setting('site.logo'))}}"/></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -78,7 +78,7 @@
                 </form>
             </div>
             <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
-                <a class="cart-link" href="order.html">
+                <a class="cart-link" href="{{route('cart.index')}}">
                     <span class="title">Shopping cart</span>
                     <span class="total">{{Gloudemans\Shoppingcart\Facades\Cart::count()}} items -
                         ${{Gloudemans\Shoppingcart\Facades\Cart::total()}}</span>
@@ -139,189 +139,16 @@
                         </h4>
                         <div class="vertical-menu-content is-home">
                             <ul class="vertical-menu-list">
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/1.png">Electronics</a>
-                                </li>
-                                <li>
-                                    <a class="parent" href="#"><img class="icon-menu" alt="Funky roots"
-                                                                    src="assets/data/2.png">Sports &amp; Outdoors</a>
-                                    <div class="vertical-dropdown-menu">
-                                        <div class="vertical-groups col-sm-12">
-                                            <div class="mega-group col-sm-4">
-                                                <h4 class="mega-group-header"><span>Tennis</span></h4>
-                                                <ul class="group-link-default">
-                                                    <li><a href="#">Tennis</a></li>
-                                                    <li><a href="#">Coats &amp; Jackets</a></li>
-                                                    <li><a href="#">Blouses &amp; Shirts</a></li>
-                                                    <li><a href="#">Tops &amp; Tees</a></li>
-                                                    <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
-                                                    <li><a href="#">Intimates</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="mega-group col-sm-4">
-                                                <h4 class="mega-group-header"><span>Swimming</span></h4>
-                                                <ul class="group-link-default">
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Coats &amp; Jackets</a></li>
-                                                    <li><a href="#">Blouses &amp; Shirts</a></li>
-                                                    <li><a href="#">Tops &amp; Tees</a></li>
-                                                    <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
-                                                    <li><a href="#">Intimates</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="mega-group col-sm-4">
-                                                <h4 class="mega-group-header"><span>Shoes</span></h4>
-                                                <ul class="group-link-default">
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Coats &amp; Jackets</a></li>
-                                                    <li><a href="#">Blouses &amp; Shirts</a></li>
-                                                    <li><a href="#">Tops &amp; Tees</a></li>
-                                                    <li><a href="#">Hoodies &amp; Sweatshirts</a></li>
-                                                    <li><a href="#">Intimates</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="mega-custom-html col-sm-12">
-                                                <a href="#"><img src="assets/data/banner-megamenu.jpg" alt="Banner"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/3.png">Smartphone
-                                        &amp; Tablets</a></li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/4.png">Health
-                                        &amp; Beauty Bags</a></li>
-                                <li>
-                                    <a class="parent" href="#">
-                                        <img class="icon-menu" alt="Funky roots" src="assets/data/5.png">Shoes &amp;
-                                        Accessories</a>
-                                    <div class="vertical-dropdown-menu">
-                                        <div class="vertical-groups col-sm-12">
-                                            <div class="mega-group col-sm-12">
-                                                <h4 class="mega-group-header"><span>Special products</span></h4>
-                                                <div class="row mega-products">
-                                                    <div class="col-sm-3 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="assets/data/p10.jpg"
-                                                                             alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Fashion hand bag</a>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="new-price">$38</div>
-                                                            <div class="old-price">$45</div>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="assets/data/p11.jpg"
-                                                                             alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Fashion hand bag</a>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="new-price">$38</div>
-                                                            <div class="old-price">$45</div>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="assets/data/p12.jpg"
-                                                                             alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Fashion hand bag</a>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="new-price">$38</div>
-                                                            <div class="old-price">$45</div>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="assets/data/p13.jpg"
-                                                                             alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Fashion hand bag</a>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="new-price">$38</div>
-                                                            <div class="old-price">$45</div>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/6.png">Toys
-                                        &amp; Hobbies</a></li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/7.png">Computers
-                                        &amp; Networking</a></li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/8.png">Laptops
-                                        &amp; Accessories</a></li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/9.png">Jewelry
-                                        &amp; Watches</a></li>
-                                <li><a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/10.png">Flashlights
-                                        &amp; Lamps</a></li>
-                                <li>
-                                    <a href="#">
-                                        <img class="icon-menu" alt="Funky roots" src="assets/data/11.png">
-                                        Cameras &amp; Photo
-                                    </a>
-                                </li>
-                                <li class="cat-link-orther">
-                                    <a href="#">
-                                        <img class="icon-menu" alt="Funky roots" src="assets/data/5.png">
-                                        Television
-                                    </a>
-                                </li>
-                                <li class="cat-link-orther">
-                                    <a href="#">
-                                        <img class="icon-menu" alt="Funky roots" src="assets/data/7.png">Computers &amp;
-                                        Networking
-                                    </a>
-                                </li>
-                                <li class="cat-link-orther">
-                                    <a href="#">
-                                        <img class="icon-menu" alt="Funky roots" src="assets/data/6.png">
-                                        Toys &amp; Hobbies
-                                    </a>
-                                </li>
-                                <li class="cat-link-orther">
-                                    <a href="#"><img class="icon-menu" alt="Funky roots" src="assets/data/9.png">Jewelry
-                                        &amp; Watches</a></li>
+                                @forelse($header_product_categories as $category)
+                                <li><a href="{{$category->slug}}"><i class="fa {{$category->icon}}"></i>
+                                        {{$category->name}}</a></li>
+                                    @empty
+                                <li>No Category</li>
+                                    @endforelse
                             </ul>
-                            <div class="all-category"><span class="open-cate">All Categories</span></div>
+                            <div class="all-category"><span class="open-cate"><a href="{{route('shop.products')
+                            }}">All Categories <i class="fa fa-angle-right"></i></a></span></div>
+
                         </div>
                     </div>
                 </div>
@@ -546,12 +373,6 @@
                         </div>
                     </nav>
                 </div>
-            </div>
-            <!-- userinfo on top-->
-            <div id="form-search-opntop">
-            </div>
-            <!-- userinfo on top-->
-            <div id="user-info-opntop">
             </div>
             <!-- CART ICON ON MMENU -->
             <div id="shopping-cart-box-ontop">

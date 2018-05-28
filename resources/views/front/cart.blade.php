@@ -101,6 +101,9 @@
                     </div>
                         @else
                     <div class="alert alert-info"><p>Cart Is Empty!!</p></div>
+                        <div class="cart_navigation">
+                            <a class="prev-btn" href="{{route('shop.products')}}">Return To Shop</a>
+                        </div>
                         @endif
                 </div>
             </div>
