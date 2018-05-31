@@ -5252,6 +5252,16 @@ span.notify-right{
     color: #fff;
 
 }
+
+.update_cart.remove_coupon {
+    border: none;
+    box-shadow: none;
+    background: #ff3366;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px;
+    margin: 0;
+}
 .alert.alert-info {
     background: #ddd;
     color: #000;
@@ -5395,4 +5405,36 @@ ul.check-box-list li {
 
 ul.check-box-list a {
     display: block;
+}
+
+input.next-btn.paypal_submit {
+    background:  #FF3366;
+    color:  #fff;
+    padding: 10px 20px;
+}
+
+div#paypal_button {
+    text-align: right;
+}
+
+.coupon_form {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.coupon_form input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    margin:  0;
+}
+
+.coupon_form button.btn.btn-success {
+    background:  #FF3366;
+    border:  none;
+    box-shadow:  none;
+    border-radius: 0;
+    padding: 6px 10px;
+    vertical-align: baseline;
+    margin-left: -4px;
 }

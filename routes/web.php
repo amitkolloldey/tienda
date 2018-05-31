@@ -20,10 +20,12 @@ Route::resource('/cart', 'CartController');
 Route::resource('/checkout', 'CheckoutController')->middleware('auth');
 Route::get('/cart/create/{pro_id}', 'CartController@create')->name('cart.product.create');
 Route::get('/category/{category_slug}', 'productsController@category')->name('product.category');
+Route::post('/apply_coupon', 'CouponController@apply_coupon')->name('coupon.apply');
+Route::delete('/remove_coupon', 'CouponController@remove')->name('coupon.remove');
 Route::get('/price_filter', 'productsController@price_filter')->name('product.price_filter');
 Route::get('/orders', function (){
     return view('front.orders');
-})->name('order.index');
+})->name('order.index')->middleware('auth');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

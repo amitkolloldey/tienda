@@ -49,13 +49,13 @@
                         <div class="alert-danger alert">{{ $error }}</div>
                     @endforeach
                 @endif
-                @if($cartItems->count()>0)
+                @if(cartcontent()->count()>0)
                     <div class="order-detail-content">
                         @if (Session::has('message'))
                             <div class="alert alert-info">{{ Session::get('message') }}</div>
                         @endif
                         <div class="heading-counter warning">Order Details:
-                            <span>{{$cartItems->count()}} Item</span>
+                            <span>{{cartcontent()->count()}} Item</span>
                         </div>
                         <table class="table table-bordered table-responsive cart_summary">
                             <thead>
@@ -69,7 +69,7 @@
                             </thead>
                             <tbody>
 
-                            @forelse($cartItems as $product)
+                            @forelse(cartcontent() as $product)
                                 <tr>
                                     <td class="cart_product">
                                         <a href="{{$product->model->slug}}"><img src="{{url('storage/'.$product->model->image)
@@ -99,20 +99,29 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="4">Subtotal</td>
+                                <td colspan="3">Subtotal</td>
                                 <td colspan="2">${{$cartsubtotal}}</td>
                             </tr>
+                            @if(session()->has('coupon'))
+                                <tr>
+                                    <td colspan="3">Discount ({{session()->get('coupon')['code']}})</td>
+                                    <td colspan="2"> - ${{session()->get('coupon')['discount']}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">New Subtotal</td>
+                                    <td colspan="2">${{$newcartsubtotal}}</td>
+                                </tr>
+                            @endif
                             <tr>
-                                <td colspan="4">Tax</td>
+                                <td colspan="3">Tax</td>
                                 <td colspan="2">${{$carttax}}</td>
                             </tr>
                             <tr>
-                                <td colspan="4"><strong>Total</strong></td>
+                                <td colspan="3"><strong>Total</strong></td>
                                 <td colspan="2"><strong>${{$carttotal}}</strong></td>
                             </tr>
                             </tfoot>
                         </table>
-
                     </div>
                     <div class="box-border">
 
@@ -147,7 +156,7 @@
 
                                         <label for="email_address" class="required">Email Address</label>
                                         <input class="input form-control" type="email" name="email_address"
-                                               id="email_address"  value="{{old('email_address')}}">
+                                               id="email_address" value="{{old('email_address')}}">
 
                                     </div><!--/ [col] -->
 
@@ -211,7 +220,8 @@
                                     <div class="col-xs-12">
 
                                         <label for="address" class="required">Address</label>
-                                        <textarea class="input form-control" type="text" name="address" id="address">{{old('address')}}</textarea>
+                                        <textarea class="input form-control" type="text" name="address"
+                                                  id="address">{{old('address')}}</textarea>
 
                                     </div><!--/ [col] -->
 
@@ -220,7 +230,7 @@
 
                                     <div class="col-sm-6">
 
-                                        <label for="phone" class="required" >Telephone</label>
+                                        <label for="phone" class="required">Telephone</label>
                                         <input class="input form-control" type="tel" name="phone" id="phone"
                                                value="{{old('phone')}}">
 
@@ -229,7 +239,8 @@
                                     <div class="col-sm-6">
 
                                         <label for="alt_phone">Alternative Phone</label>
-                                        <input class="input form-control" type="tel" name="alt_phone" id="alt_phone"  value="{{old('alt_phone')}}">
+                                        <input class="input form-control" type="tel" name="alt_phone" id="alt_phone"
+                                               value="{{old('alt_phone')}}">
 
                                     </div><!--/ [col] -->
 
@@ -241,11 +252,18 @@
                             <ul>
                                 <li>
                                     <label for="payment_option">
-                                        <input type="radio" checked name="payment_option" id="cash_on_delivery" onclick="radio_cash_on_delivery()" selected value="cod"> Cash On Delivery</label>
+                                        <input type="radio" checked name="payment_option" id="cash_on_delivery"
+                                               onclick="radio_cash_on_delivery()" selected value="cod"> Cash On Delivery</label>
                                 </li>
                                 <li>
                                     <label for="payment_option">
-                                        <input type="radio" name="payment_option" id="credit_card_option" onclick="radio_credit_card()" value="stripe"> Credit card</label>
+                                        <input type="radio" name="payment_option" id="credit_card_option"
+                                               onclick="radio_credit_card()" value="stripe"> Credit card</label>
+                                </li>
+                                <li>
+                                    <label for="payment_option">
+                                        <input type="radio" name="payment_option" id="paypal_option"
+                                               onclick="radio_paypal()" value="paypal"> Paypal</label>
                                 </li>
                             </ul>
 
@@ -273,16 +291,19 @@
                                     <div id="card-errors" role="alert"></div>
                                 </div>
                             </div>
+
                             <hr>
                             <div class="cart_navigation">
                                 {!! NoCaptcha::display(['data-theme' => 'dark']) !!}
                                 <button class="next-btn" type="submit" id="complete-order">Place Order</button>
                             </div>
                         </form>
+
                     </div>
                 @else
                     <div class="alert alert-info"><p>Cart Is Empty!!</p></div>
                 @endif
+
             </div>
         </div>
     </div>
@@ -294,13 +315,17 @@
     <script>
         document.getElementById('credit_card').style.display = 'none';
 
+
         function radio_cash_on_delivery() {
+            document.getElementById('credit_card').style.display = 'none';
+        }
+
+        function radio_paypal() {
             document.getElementById('credit_card').style.display = 'none';
         }
 
         function radio_credit_card() {
             document.getElementById('credit_card').style.display = 'block';
-
             // Create a Stripe client.
             var stripe = Stripe('pk_test_En0qw8rM8y1PNnTSI3CXU41I');
 
@@ -381,7 +406,6 @@
                 }
             });
         }
-
     </script>
 
     <script src="//geodata.solutions/includes/countrystate.js"></script>

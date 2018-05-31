@@ -16,11 +16,26 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::content();
-        $carttotal = Cart::total();
         $cartsubtotal = Cart::subtotal();
-        $carttax = Cart::tax();
-
-        return view('front.cart',compact('cartItems','carttotal','cartsubtotal','carttax'));
+        $newcartsubtotal = 0;
+        if(session()->has('coupon')){
+            $newcartsubtotal = Cart::subtotal() - session()->get('coupon')['discount'];
+            if($newcartsubtotal < 0){
+                $newcartsubtotal = 0;
+            }
+            $carttax = $newcartsubtotal * config('cart.tax') / 100;
+            $carttotal = $carttax + $newcartsubtotal;
+        }else{
+            $carttotal = Cart::total();
+            $carttax = Cart::tax();
+        }
+        return view('front.cart')->with([
+            'cartItems'=>$cartItems,
+            'carttax'=>$carttax,
+            'cartsubtotal'=>$cartsubtotal,
+            'carttotal'=>$carttotal,
+            'newcartsubtotal'=>$newcartsubtotal
+        ]);
     }
 
     /**
@@ -34,40 +49,6 @@ class CartController extends Controller
         Cart::add(['id' => $pro_id, 'name' => $product->name, 'qty' => 1, 'price' => $product->price])->associate('App\Product');
         return back();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request,$id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *

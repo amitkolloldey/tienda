@@ -12,6 +12,11 @@
             </h2>
             <!-- ../page heading-->
             <div class="page-content page-order">
+                @if(count($errors) > 0)
+                    @foreach ($errors->all() as $error)
+                        <div class="alert-danger alert">{{ $error }}</div>
+                    @endforeach
+                @endif
                 @if (Session::has('message'))
                     <div class="alert alert-info">{{ Session::get('message') }}</div>
                 @endif
@@ -77,7 +82,6 @@
                                 <td>Cart Is Empty!!</td>
                             </tr>
 
-
                         @endforelse
                         </tbody>
                         <tfoot>
@@ -85,6 +89,25 @@
                             <td colspan="5">Subtotal</td>
                             <td colspan="2">${{$cartsubtotal}}</td>
                         </tr>
+                        @if(session()->has('coupon'))
+                        <tr>
+                            <td colspan="5">Discount ({{session()->get('coupon')['code']}})</td>
+                            <td colspan="1">
+                                <form action="{{route('coupon.remove')}}" method="post" class="text-center">
+                                    {{csrf_field()}}
+                                    {{method_field('DELETE')}}
+                                    <button type="submit" class="update_cart remove_coupon"
+                                            name="remove" title="Remove Coupon">Remove</button>
+                                </form>
+
+                            </td>
+                            <td colspan="2"> - ${{session()->get('coupon')['discount']}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">New Subtotal</td>
+                            <td colspan="2">${{$newcartsubtotal}}</td>
+                        </tr>
+                        @endif
                         <tr>
                             <td colspan="5">Tax</td>
                             <td colspan="2">${{$carttax}}</td>
@@ -95,6 +118,15 @@
                         </tr>
                         </tfoot>
                     </table>
+                        @if(!session()->has('coupon'))
+                        <div class="coupon_form">
+                            <form action="{{route('coupon.apply')}}" method="post">
+                                {{csrf_field()}}
+                                <input type="text" name="code" placeholder="Apply Coupon">
+                                <button class="btn btn-success" name="apply" type="submit">Apply</button>
+                            </form>
+                        </div>
+                        @endif
                     <div class="cart_navigation">
                         <a class="prev-btn" href="{{route('shop.products')}}">Continue shopping</a>
                         <a class="next-btn" href="{{route('checkout.index')}}">Proceed to checkout</a>

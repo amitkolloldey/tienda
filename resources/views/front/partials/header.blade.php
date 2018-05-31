@@ -118,7 +118,7 @@
                             <span class="toal-price pull-right">${{Gloudemans\Shoppingcart\Facades\Cart::total()}}</span>
                         </div>
                         <div class="cart-buttons">
-                            <a href="{{route('checkout.index')}}" class="btn-check-out">Checkout</a>
+                            <a href="{{route('cart.index')}}" class="btn-check-out">Go To Cart</a>
                         </div>
                     </div>
                 </div>

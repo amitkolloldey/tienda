@@ -16,21 +16,12 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        $cartItems = Cart::content();
-        $carttotal = Cart::total();
-        $cartsubtotal = Cart::subtotal();
-        $carttax = Cart::tax();
-        return view('front.checkout',compact('cartItems','carttotal','cartsubtotal','carttax'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('front.checkout')->with([
+            'carttax'=>$this->cart()['carttax'],
+            'cartsubtotal'=>$this->cart()['cartsubtotal'],
+            'carttotal'=>$this->cart()['carttotal'],
+            'newcartsubtotal'=>$this->cart()['newcartsubtotal']
+        ]);
     }
 
     /**
@@ -43,7 +34,7 @@ class CheckoutController extends Controller
     {
         //dd($request->all());
         $contents = Cart::content()->map(function ($item) {
-            return $item->model->slug.', '.$item->qty;
+            return $item->model->name.'|'.$item->qty;
         })->values()->toJson();
         $this->validate($request,[
             'first_name' => 'required|max:255',
@@ -57,7 +48,7 @@ class CheckoutController extends Controller
         ]);
         try {
             $charge = Stripe::charges()->create([
-                'amount' => Cart::total(),
+                'amount' => $this->cart()['carttotal'],
                 'currency' => 'USD',
                 'source' => $request->stripeToken,
                 'description' => 'Tienda Order',
@@ -65,9 +56,10 @@ class CheckoutController extends Controller
                 'metadata' => [
                     'contents' => $contents,
                     'quantity' => Cart::instance('default')->count(),
+                    'discount' => '$'. session()->get('coupon')['discount'],
                 ],
             ]);
-
+            session()->forget('coupon');
             Cart::destroy();
             return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
         } catch (CardErrorException $e) {
@@ -76,47 +68,29 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function show($id)
+    private function cart()
     {
-        //
+        $cartsubtotal = Cart::subtotal();
+        $newcartsubtotal = 0;
+        if (session()->has('coupon')) {
+            $newcartsubtotal = Cart::subtotal() - session()->get('coupon')['discount'];
+            if ($newcartsubtotal < 0) {
+                $newcartsubtotal = 0;
+            }
+            $carttax = $newcartsubtotal * config('cart.tax') / 100;
+            $carttotal = $carttax + $newcartsubtotal;
+        } else {
+            $carttotal = Cart::total();
+            $carttax = Cart::tax();
+        }
+        return [
+            'cartsubtotal' => $cartsubtotal,
+            'newcartsubtotal' => $newcartsubtotal,
+            'carttax' => $carttax,
+            'carttotal' => $carttotal
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
