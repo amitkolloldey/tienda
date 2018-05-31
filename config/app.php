@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'admin_email' => env('ADMIN_EMAIL', 'tienda@tienda.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +54,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+
     'paypal_email' => env('PAYPAL_EMAIL', ''),
 
     /*

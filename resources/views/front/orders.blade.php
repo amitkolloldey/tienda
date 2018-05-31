@@ -52,7 +52,7 @@
                                 <span>{{ucfirst(str_replace('_',' ',$order->payment_option))}}</span>
                             </td>
                             <td class="price">
-                                <span>${{$order->billing_discount}}</span>
+                                <span>${{$order->billing_discount ? $order->billing_discount : '0'}}</span>
                             </td>
                             <td class="price">
                                 <span>${{$order->billing_subtotal}}</span>

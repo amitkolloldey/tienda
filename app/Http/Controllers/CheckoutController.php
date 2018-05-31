@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewOrder;
 use App\Order;
 use App\OrderProduct;
 use Cartalyst\Stripe\Exception\CardErrorException;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -65,18 +67,22 @@ class CheckoutController extends Controller
                     ],
                 ]);
                 $order = $this->order($request, null,'paid','on_review');
+                Mail::send(new NewOrder($order));
                 reset_session();
                 return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
             } catch (CardErrorException $e) {
-                $this->order($request, $e->getMessage(),'payment_failed','canceled');
+                $order =  $this->order($request, $e->getMessage(),'payment_failed','canceled');
+                Mail::send(new NewOrder($order));
                 return back()->withErrors('Error! ' . $e->getMessage());
             }
         }elseif($request->payment_option == 'paypal'){
-            $this->order($request, null,'on_review','on_review');
+            $order =  $this->order($request, null,'on_review','on_review');
+            Mail::send(new NewOrder($order));
             reset_session();
             return redirect(route('paypal.payment'));
         }else{
-            $this->order($request, null,'pending_payment','on_review');
+            $order =  $this->order($request, null,'pending_payment','on_review');
+            Mail::send(new NewOrder($order));
             reset_session();
             return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
         }
