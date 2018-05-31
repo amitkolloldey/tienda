@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'paypal_email' => env('PAYPAL_EMAIL', ''),
 
     /*
     |--------------------------------------------------------------------------

@@ -23,6 +23,9 @@ Route::get('/category/{category_slug}', 'productsController@category')->name('pr
 Route::post('/apply_coupon', 'CouponController@apply_coupon')->name('coupon.apply');
 Route::delete('/remove_coupon', 'CouponController@remove')->name('coupon.remove');
 Route::get('/price_filter', 'productsController@price_filter')->name('product.price_filter');
+Route::get('/paypal', function (){
+    return view('front.paypal');
+})->name('paypal.payment')->middleware('auth');
 Route::get('/orders', function (){
     return view('front.orders');
 })->name('order.index')->middleware('auth');

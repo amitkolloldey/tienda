@@ -27,13 +27,16 @@ class CartListener
      */
     public function handle($event)
     {
-        $code = session()->get('coupon')['code'];
-        $coupon = Coupon::where('code',$code)->first();
-        session()->put('coupon',[
-            'code' => $coupon->code,
-            'discount' => $coupon->discount(Cart::subtotal()),
-            'type' => $coupon->type,
-        ]);
+        if(session()->has('coupon')){
 
+            $code = session()->get('coupon')['code'];
+            $coupon = Coupon::where('code',$code)->first();
+            session()->put('coupon',[
+                'code' => $coupon->code,
+                'discount' => $coupon->discount(Cart::subtotal()),
+                'type' => $coupon->type,
+            ]);
+
+        }
     }
 }

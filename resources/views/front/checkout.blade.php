@@ -314,14 +314,17 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         document.getElementById('credit_card').style.display = 'none';
-
+        document.getElementById('complete-order').innerText = 'Place Order';
 
         function radio_cash_on_delivery() {
             document.getElementById('credit_card').style.display = 'none';
+            document.getElementById('complete-order').innerText = 'Place Order';
         }
 
         function radio_paypal() {
             document.getElementById('credit_card').style.display = 'none';
+            document.getElementById('complete-order').innerText = 'Proceed To Paypal';
+
         }
 
         function radio_credit_card() {

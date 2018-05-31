@@ -33,9 +33,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-        $contents = Cart::content()->map(function ($item) {
-            return $item->model->name.'|'.$item->qty;
-        })->values()->toJson();
+
         $this->validate($request,[
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -44,26 +42,37 @@ class CheckoutController extends Controller
             'country' => 'required|max:255',
             'state' => 'required|max:255',
             'post_code' => 'required|numeric',
+            'payment_option' => 'required',
             //'g-recaptcha-response' => 'required|captcha'
         ]);
-        try {
-            $charge = Stripe::charges()->create([
-                'amount' => $this->cart()['carttotal'],
-                'currency' => 'USD',
-                'source' => $request->stripeToken,
-                'description' => 'Tienda Order',
-                'receipt_email' => $request->email_address,
-                'metadata' => [
-                    'contents' => $contents,
-                    'quantity' => Cart::instance('default')->count(),
-                    'discount' => '$'. session()->get('coupon')['discount'],
-                ],
-            ]);
-            session()->forget('coupon');
-            Cart::destroy();
+        if($request->payment_option == 'stripe'){
+            $contents = Cart::content()->map(function ($item) {
+                return $item->model->name.'|'.$item->qty;
+            })->values()->toJson();
+            try {
+                $charge = Stripe::charges()->create([
+                    'amount' => $this->cart()['carttotal'],
+                    'currency' => 'USD',
+                    'source' => $request->stripeToken,
+                    'description' => 'Tienda Order',
+                    'receipt_email' => $request->email_address,
+                    'metadata' => [
+                        'contents' => $contents,
+                        'quantity' => Cart::instance('default')->count(),
+                        'discount' => '$'. session()->get('coupon')['discount'],
+                    ],
+                ]);
+                reset_session();
+                return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
+            } catch (CardErrorException $e) {
+                return back()->withErrors('Error! ' . $e->getMessage());
+            }
+        }elseif($request->payment_option == 'paypal'){
+            //reset_session();
+            return redirect(route('paypal.payment'));
+        }else{
+            reset_session();
             return redirect(route('order.index'))->with('order_message','Your Order Was Successfully Created');
-        } catch (CardErrorException $e) {
-            return back()->withErrors('Error! ' . $e->getMessage());
         }
     }
 
