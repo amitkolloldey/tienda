@@ -135,7 +135,7 @@
 
                                         <label for="first_name" class="required">First Name</label>
                                         <input class="input form-control" type="text" name="first_name"
-                                               id="first_name" value="{{old('first_name')}}">
+                                               id="first_name" value="{{old('first_name',Auth::user()->name)}}" >
 
                                     </div><!--/ [col] -->
 
@@ -156,7 +156,7 @@
 
                                         <label for="email_address" class="required">Email Address</label>
                                         <input class="input form-control" type="email" name="email_address"
-                                               id="email_address" value="{{old('email_address')}}">
+                                               id="email_address" value="{{old('email_address',Auth::user()->email)}}">
 
                                     </div><!--/ [col] -->
 
@@ -272,8 +272,8 @@
                                     <label for="name_on_card">
                                         Cardholder Name
                                     </label>
-                                    <div id="name_on_card">
-                                        <input type="text" class="input form-control" name="name_on_card">
+                                    <div id="name_on_card_wrap">
+                                        <input type="text" class="input form-control" name="name_on_card" id="name_on_card">
                                     </div>
 
                                     <!-- Used to display form errors. -->
@@ -328,6 +328,7 @@
         }
 
         function radio_credit_card() {
+            document.getElementById('complete-order').innerText = 'Place Order';
             document.getElementById('credit_card').style.display = 'block';
             // Create a Stripe client.
             var stripe = Stripe('pk_test_En0qw8rM8y1PNnTSI3CXU41I');

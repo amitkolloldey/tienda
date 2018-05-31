@@ -5438,3 +5438,23 @@ div#paypal_button {
     vertical-align: baseline;
     margin-left: -4px;
 }
+.order-detail-content .cart_summary .price {
+    text-align: center;
+}
+.order_product img {
+    width: 50px;
+}
+
+.order_product span {
+    width:  50%;
+    float: left;
+    height:  100%;
+    vertical-align: middle;
+}
+
+.order_product li {
+    width:  100%;
+    display: block;
+    clear:  both;
+    padding: 10px;
+}
