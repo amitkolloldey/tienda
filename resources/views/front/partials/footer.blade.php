@@ -5,7 +5,7 @@
         <div id="introduce-box" class="row">
             <div class="col-md-3">
                 <div id="address-box">
-                    <a href="#"><img src="assets/data/introduce-logo.png" alt="" /></a>
+                    <a href="#"><img src="assets/data/introduce-logo.png" alt=""/></a>
                     <div id="address-list">
                         <div class="tit-name">Address:</div>
                         <div class="tit-contain">Example Street 68, Mahattan, New York, USA.</div>
@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="introduce-title">Company</div>
-                        <ul id="introduce-company"  class="introduce-list">
+                        <ul id="introduce-company" class="introduce-list">
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Testimonials</a></li>
                             <li><a href="#">Affiliate Program</a></li>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="introduce-title">My Account</div>
-                        <ul id = "introduce-Account" class="introduce-list">
+                        <ul id="introduce-Account" class="introduce-list">
                             <li><a href="#">My Order</a></li>
                             <li><a href="#">My Wishlist</a></li>
                             <li><a href="#">My Credit Slip</a></li>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="introduce-title">Support</div>
-                        <ul id = "introduce-support"  class="introduce-list">
+                        <ul id="introduce-support" class="introduce-list">
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Testimonials</a></li>
                             <li><a href="#">Affiliate Program</a></li>
@@ -78,34 +78,34 @@
                 <ul id="trademark-list">
                     <li id="payment-methods">Accepted Payment Methods</li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-ups.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-ups.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-qiwi.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-qiwi.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-wu.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-wu.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-cn.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-cn.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-visa.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-visa.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-mc.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-mc.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-ems.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-ems.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-dhl.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-dhl.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-fe.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-fe.jpg" alt="ups"/></a>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-wm.jpg"  alt="ups"/></a>
+                        <a href="#"><img src="assets/data/trademark-wm.jpg" alt="ups"/></a>
                     </li>
                 </ul>
             </div>
@@ -128,6 +128,44 @@
 <script type="text/javascript" src="{{asset('assets/js/jquery.actual.min.js')}}"></script>
 @yield('scripts')
 <script type="text/javascript" src="{{asset('assets/js/theme-script.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+<!-- Initialize autocomplete menu -->
+<script>
+    var client = algoliasearch('{{config('scout.algolia.id')}}', '{{config('scout.algolia.secret')}}');
+    var index = client.initIndex('Products');
 
+    //initialize autocomplete on search input (ID selector must match)
+    autocomplete('#aa-search-input',
+        {hint: true}, {
+            source: autocomplete.sources.hits(index, {hitsPerPage: 10}),
+            //value to be displayed in input control after user's suggestion selection
+            displayKey: 'name',
+            //hash of templates used when rendering dataset
+            templates: {
+                //'suggestion' templating function used to render a single suggestion
+                suggestion: function (suggestion) {
+                    if (suggestion.price) {
+                        var image = '{{url("storage/")}}' + '/' + suggestion.image;
+                        return '<span>'+ '<img src="'+ image +'" width="50px" style="margin-right: 10px"/>'
+                            +'</span><span>' +
+                            suggestion._highlightResult.name.value + '</span><span  class="pull-right">'+
+                            'Price: $'+ suggestion.price + '<span>';
+                    }else{
+                        return '<span>' +
+                            suggestion._highlightResult.name.value + '</span><span class="pull-right">' +
+                            'Category'+'</span>'
+                    }
+                }
+            }
+        }).on('autocomplete:selected', function (event, suggestion, dataset) {
+        if (suggestion.price) {
+            window.location.href = "{{url('product')}}" + '/' + suggestion.slug;
+        } else {
+            window.location.href = "{{url('/category')}}" + '/' + suggestion.slug;
+        }
+        enterPressed = true;
+    });
+</script>
 </body>
 </html>

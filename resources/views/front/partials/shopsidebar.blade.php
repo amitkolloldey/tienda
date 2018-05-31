@@ -40,13 +40,13 @@
         </div>
     </div>
     <!-- ./block category  -->
+@if(request()->route()->getName() == 'shop.products')
     <!-- block filter -->
     <div class="block left-module">
         <p class="title_block">Filter selection</p>
         <div class="block_content">
             <!-- layered -->
             <div class="layered layered-filter-price">
-            @if(request()->route()->getName() == 'shop.products')
                 <!-- filter price -->
                     <div class="layered_subtitle">Price Filter</div>
                     <div class="layered-content slider-range">
@@ -98,13 +98,12 @@
                         </ul>
                     </div>
                     <!-- ./filter price -->
-                @endif
             </div>
             <!-- ./layered -->
-
         </div>
     </div>
     <!-- ./block filter  -->
+    @endif
 </div>
 
 @section('scripts')
