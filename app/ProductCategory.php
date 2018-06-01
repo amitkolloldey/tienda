@@ -11,8 +11,8 @@ use TCG\Voyager\Traits\Resizable;
 class ProductCategory extends Model
 {
     use Searchable,Sluggable,SluggableScopeHelpers,Resizable;
-
-   protected $guarded=[];
+    protected $table = 'product_categories';
+    protected $guarded=[];
 
 
     public function searchableAs()
@@ -22,8 +22,10 @@ class ProductCategory extends Model
 
 
     public function products(){
-        return $this->belongsToMany('App\Product','product_category');
+        return $this->belongsToMany('App\Product','product_product_category', 'product_id', 'product_category_id');
     }
+
+
     public function parentId()
     {
         return $this->belongsTo(self::class);

@@ -3846,11 +3846,9 @@ span.notify-right{
 
 }
 #product .pb-right-column .form-option .product-qty{
-  border: 1px solid #eaeaea;
   width: 60px;
   margin-left: 50px;
   overflow: hidden;
-  background: #FAFAFA;
 
 }
 #product .pb-right-column .form-option .attributes .btn-plus{

@@ -80,7 +80,12 @@ class ProductsController extends Controller
     public function show($slug)
     {
         $product = Product::findBySlugOrFail($slug);
-        return view('front.singleproduct',compact('product'));
+        $cat_ids = $product->product_categories()->pluck('id');
+        $related_products = Product::whereHas('product_categories', function($query) use ($cat_ids)
+        {
+            $query->whereIn('id', $cat_ids);
+        })->get();
+        return view('front.singleproduct',compact('product','related_products'));
     }
 
     /**

@@ -122,14 +122,17 @@
 <script type="text/javascript" src="{{asset('assets/lib/jquery.bxslider/jquery.bxslider.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/owl.carousel/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/jquery.countdown/jquery.countdown.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/lib/jquery.elevatezoom.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('assets/lib/fancyBox/jquery.fancybox.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/jquery.actual.min.js')}}"></script>
-@yield('scripts')
+
 <script type="text/javascript" src="{{asset('assets/js/theme-script.js')}}"></script>
+@yield('scripts')
 <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+
 <!-- Initialize autocomplete menu -->
 <script>
     var client = algoliasearch('{{config('scout.algolia.id')}}', '{{config('scout.algolia.secret')}}');

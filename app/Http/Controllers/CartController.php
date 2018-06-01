@@ -18,23 +18,23 @@ class CartController extends Controller
         $cartItems = Cart::content();
         $cartsubtotal = Cart::subtotal();
         $newcartsubtotal = 0;
-        if(session()->has('coupon')){
+        if (session()->has('coupon')) {
             $newcartsubtotal = Cart::subtotal() - session()->get('coupon')['discount'];
-            if($newcartsubtotal < 0){
+            if ($newcartsubtotal < 0) {
                 $newcartsubtotal = 0;
             }
             $carttax = $newcartsubtotal * config('cart.tax') / 100;
             $carttotal = $carttax + $newcartsubtotal;
-        }else{
+        } else {
             $carttotal = Cart::total();
             $carttax = Cart::tax();
         }
         return view('front.cart')->with([
-            'cartItems'=>$cartItems,
-            'carttax'=>$carttax,
-            'cartsubtotal'=>$cartsubtotal,
-            'carttotal'=>$carttotal,
-            'newcartsubtotal'=>$newcartsubtotal
+            'cartItems' => $cartItems,
+            'carttax' => $carttax,
+            'cartsubtotal' => $cartsubtotal,
+            'carttotal' => $carttotal,
+            'newcartsubtotal' => $newcartsubtotal
         ]);
     }
 
@@ -45,15 +45,33 @@ class CartController extends Controller
      */
     public function create($pro_id)
     {
-        $product =Product::findOrFail($pro_id);
+        $product = Product::findOrFail($pro_id);
+        if (!$product->quantity > 0) {
+            return back();
+        }
         Cart::add(['id' => $pro_id, 'name' => $product->name, 'qty' => 1, 'price' => $product->price])->associate('App\Product');
         return back();
     }
+
+
+    public function createSingleCart(Request $request, $pro_id)
+    {
+
+        $product = Product::findOrFail($pro_id);
+        if (!$product->quantity > 0) {
+            return back();
+        }
+        Cart::add(['id' => $pro_id, 'name' => $product->name, 'qty' => $request->qty ? $request->qty : 1, 'price' =>
+            $product->price])
+            ->associate('App\Product');
+        return back();
+    }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $rowId)
@@ -66,7 +84,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
