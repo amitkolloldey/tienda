@@ -1,7 +1,7 @@
 <?php
 
 use Gloudemans\Shoppingcart\Facades\Cart;
-
+use Illuminate\Support\Facades\Request;
 function cartcontent(){
     return Cart::content();
 }
@@ -19,4 +19,12 @@ function cartqty(){
 function reset_session(){
     return [session()->forget('coupon'),
     Cart::destroy()];
+}
+
+function setActive($path)
+{
+    if(Request::path() == $path){
+        return "active";
+    }
+    return '';
 }

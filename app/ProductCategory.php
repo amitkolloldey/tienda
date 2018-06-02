@@ -22,7 +22,7 @@ class ProductCategory extends Model
 
 
     public function products(){
-        return $this->belongsToMany('App\Product','product_product_category', 'product_id', 'product_category_id');
+        return $this->belongsToMany('App\Product');
     }
 
 

@@ -78,35 +78,24 @@
                 <ul id="trademark-list">
                     <li id="payment-methods">Accepted Payment Methods</li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-ups.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/paypal.png')}}" alt="paypal"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-qiwi.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/visa.png')}}" alt="visa"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-wu.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/mastercard.png')}}" alt="mastercard"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-cn.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/american_express.png')}}" alt="american express" />
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-visa.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/discover.png')}}" alt="discover"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-mc.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/cash_on_delivery.png')}}" alt="cash on delivery"/>
                     </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-ems.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-dhl.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-fe.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-wm.jpg" alt="ups"/></a>
-                    </li>
+
                 </ul>
             </div>
         </div> <!-- /#trademark-box -->

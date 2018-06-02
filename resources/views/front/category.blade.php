@@ -47,10 +47,22 @@
                             <div class="sorting">
                                 <p class="sort">
                                     <span>Sort by:</span>
-                                    <a href="{{ route('product.category', [ 'sortby' => 'newest_items'])}}">Newest Items</a>
-                                    <a href="{{ route('product.category', ['sortby' => 'best_selling'])}}">Bestselling</a>
-                                    <a href="{{ route('product.category', ['sortby' => 'low_to_high']) }}">Low to High</a>
-                                    <a href="{{ route('product.category', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'newest_items',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Newest Items</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'best_selling',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Bestselling</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'low_to_high',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Low to High</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'high_to_low',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">High to Low</a>
                                 </p>
                             </div>
                         </div>
@@ -167,10 +179,23 @@
                             <div class="sorting">
                                 <p class="sort">
                                     <span>Sort by:</span>
-                                    <a href="{{ url('/', [ 'sortby' => 'newest_items'])}}">Newest Items</a>
-                                    <a href="{{ route('product.category', ['sortby' => 'best_selling'])}}">Bestselling</a>
-                                    <a href="{{ route('product.category', ['sortby' => 'low_to_high']) }}">Low to High</a>
-                                    <a href="{{ route('product.category', [ 'sortby' => 'high_to_low']) }}">High to Low</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'newest_items',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Newest Items</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'best_selling',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Bestselling</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'low_to_high',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">Low to High</a>
+                                    <a href="{{ route('product.category', [
+                                    'sortby' => 'high_to_low',
+                                    'category_slug' => $product_category->slug
+                                    ])}}">High to Low</a>
+
                                 </p>
                             </div>
                         </div>

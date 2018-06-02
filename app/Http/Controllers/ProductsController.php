@@ -46,31 +46,19 @@ class ProductsController extends Controller
      */
     public function category($category_slug)
     {
+
         $product_category = ProductCategory::findBySlugOrFail($category_slug);
-        $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->paginate(18);
+        if (request()->sortby == 'low_to_high') {
+            $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->orderBy('price')
+                ->paginate(18);
+        } elseif (request()->sortby == 'high_to_low') {
+            $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->orderBy('price','desc')
+                ->paginate(18);
+        }else{
+            $category_products = ProductCategory::findBySlugOrFail($category_slug)->products()->paginate(18);
+        }
         return view('front.category',compact('product_category','category_products'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -87,42 +75,5 @@ class ProductsController extends Controller
         })->get();
         return view('front.singleproduct',compact('product','related_products'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-
 
 }
