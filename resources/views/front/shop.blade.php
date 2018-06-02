@@ -87,7 +87,7 @@
                                                 </div>
                                             </div>
                                             <div class="right-block">
-                                                <h5 class="product-name"><a href="#">{{$product->name}}</a></h5>
+                                                <h5 class="product-name"> <a href="{{route('single.product',$product->slug)}}">{{$product->name}}</a></h5>
                                                 <div class="product-star">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>

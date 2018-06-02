@@ -78,35 +78,24 @@
                 <ul id="trademark-list">
                     <li id="payment-methods">Accepted Payment Methods</li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-ups.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/paypal.png')}}" alt="paypal"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-qiwi.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/visa.png')}}" alt="visa"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-wu.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/mastercard.png')}}" alt="mastercard"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-cn.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/american_express.png')}}" alt="american express" />
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-visa.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/discover.png')}}" alt="discover"/>
                     </li>
                     <li>
-                        <a href="#"><img src="assets/data/trademark-mc.jpg" alt="ups"/></a>
+                        <img src="{{url('assets/data/cash_on_delivery.png')}}" alt="cash on delivery"/>
                     </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-ems.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-dhl.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-fe.jpg" alt="ups"/></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="assets/data/trademark-wm.jpg" alt="ups"/></a>
-                    </li>
+
                 </ul>
             </div>
         </div> <!-- /#trademark-box -->
@@ -122,14 +111,17 @@
 <script type="text/javascript" src="{{asset('assets/lib/jquery.bxslider/jquery.bxslider.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/owl.carousel/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/lib/jquery.countdown/jquery.countdown.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/lib/jquery.elevatezoom.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('assets/lib/fancyBox/jquery.fancybox.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/jquery.actual.min.js')}}"></script>
-@yield('scripts')
+
 <script type="text/javascript" src="{{asset('assets/js/theme-script.js')}}"></script>
+@yield('scripts')
 <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+
 <!-- Initialize autocomplete menu -->
 <script>
     var client = algoliasearch('{{config('scout.algolia.id')}}', '{{config('scout.algolia.secret')}}');

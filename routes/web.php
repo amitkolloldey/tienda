@@ -19,6 +19,7 @@ Route::get('/product/{slug}', 'ProductsController@show')->name('single.product')
 Route::resource('/cart', 'CartController');
 Route::resource('/checkout', 'CheckoutController')->middleware('auth');
 Route::get('/cart/create/{pro_id}', 'CartController@create')->name('cart.product.create');
+Route::post('/cart/create/{pro_id}', 'CartController@createSingleCart')->name('cart.single.product.create');
 Route::get('/category/{category_slug}', 'ProductsController@category')->name('product.category');
 Route::post('/apply_coupon', 'CouponController@apply_coupon')->name('coupon.apply');
 Route::delete('/remove_coupon', 'CouponController@remove')->name('coupon.remove');

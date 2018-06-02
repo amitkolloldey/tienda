@@ -21,8 +21,8 @@ class Product extends Model
     }
 
 
-    public function product_category(){
-        return $this->belongsToMany('App\ProductCategory');
+    public function product_categories(){
+        return $this->belongsToMany('App\ProductCategory','product_product_category', 'product_id', 'product_category_id');
     }
 
     public function sluggable()
