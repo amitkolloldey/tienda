@@ -18,6 +18,7 @@ Route::get('/shop', 'ProductsController@index')->name('shop.products');
 Route::get('/product/{slug}', 'ProductsController@show')->name('single.product');
 Route::resource('/cart', 'CartController');
 Route::resource('/checkout', 'CheckoutController')->middleware('auth');
+Route::resource('/review', 'ProductReviewsController')->middleware('auth');
 Route::get('/cart/create/{pro_id}', 'CartController@create')->name('cart.product.create');
 Route::post('/cart/create/{pro_id}', 'CartController@createSingleCart')->name('cart.single.product.create');
 Route::get('/category/{category_slug}', 'ProductsController@category')->name('product.category');

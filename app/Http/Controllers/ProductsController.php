@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductCategory;
+use App\ProductReview;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -22,6 +23,7 @@ class ProductsController extends Controller
         }else{
             $products = Product::where('status','published')->paginate(18);
         }
+
         return view('front.shop',compact('products'));
     }
 
@@ -73,7 +75,14 @@ class ProductsController extends Controller
         {
             $query->whereIn('id', $cat_ids);
         })->get();
-        return view('front.singleproduct',compact('product','related_products'));
+        $reviews = ProductReview::where('product_id',$product->id)->where('status',1)->get();
+        $reviewsum = ProductReview::where('product_id',$product->id)->where('status',1)->sum('rating');
+        if($reviewsum){
+            $rating_avg = $reviewsum/$reviews->count();
+        }else{
+            $rating_avg = 0;
+        }
+        return view('front.singleproduct',compact('product','related_products','rating_avg','reviews'));
     }
 
 }
