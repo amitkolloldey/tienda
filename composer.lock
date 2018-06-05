@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d8fcb5b481001cf64c36329b0b7f22e",
+    "content-hash": "4998522e90aba9ec69f1c107b18304d6",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -176,6 +176,60 @@
                 "widgets"
             ],
             "time": "2018-04-15T19:59:08+00:00"
+        },
+        {
+            "name": "bhavinjr/laravel-wishlist",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bhavinjr/laravel-wishlist.git",
+                "reference": "e6a07d6f459a1a1945637c55bfd936669f4e15ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bhavinjr/laravel-wishlist/zipball/e6a07d6f459a1a1945637c55bfd936669f4e15ff",
+                "reference": "e6a07d6f459a1a1945637c55bfd936669f4e15ff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bhavinjr\\Wishlist\\Providers\\WishlistServiceProvider"
+                    ],
+                    "aliases": {
+                        "Wishlist": "Bhavinjr\\Wishlist\\Facades\\Wishlist"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bhavinjr\\Wishlist\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bhavin Rudani",
+                    "email": "bhavinrudani94@gmail.com"
+                }
+            ],
+            "description": "wishlist for laravel 5.*.*",
+            "keywords": [
+                "ecommerce laravel wishlist",
+                "laravel ecommerce",
+                "laravel wishlist",
+                "wishlist",
+                "wishlist laravel"
+            ],
+            "time": "2018-04-30T11:38:43+00:00"
         },
         {
             "name": "cartalyst/collections",
@@ -4092,16 +4146,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.0.10",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "3c34cf3f4bbac9e003d9325225e9ef1a49180a18"
+                "reference": "bc88ad53e825ebacc7b190bbd360781fce381c64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3c34cf3f4bbac9e003d9325225e9ef1a49180a18",
-                "reference": "3c34cf3f4bbac9e003d9325225e9ef1a49180a18",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/bc88ad53e825ebacc7b190bbd360781fce381c64",
+                "reference": "bc88ad53e825ebacc7b190bbd360781fce381c64",
                 "shasum": ""
             },
             "require": {
@@ -4110,20 +4164,26 @@
                 "symfony/polyfill-php72": "~1.5"
             },
             "conflict": {
-                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0",
+                "symfony/console": "<3.4"
             },
             "require-dev": {
                 "ext-iconv": "*",
+                "symfony/process": "~3.4|~4.0",
                 "twig/twig": "~1.34|~2.4"
             },
             "suggest": {
                 "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
-                "ext-intl": "To show region name in time zone dump"
+                "ext-intl": "To show region name in time zone dump",
+                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
             },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "4.1-dev"
                 }
             },
             "autoload": {
@@ -4157,7 +4217,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2018-04-26T16:12:06+00:00"
+            "time": "2018-04-29T07:56:09+00:00"
         },
         {
             "name": "tcg/voyager",

@@ -75,14 +75,7 @@ class ProductsController extends Controller
         {
             $query->whereIn('id', $cat_ids);
         })->get();
-        $reviews = ProductReview::where('product_id',$product->id)->where('status',1)->get();
-        $reviewsum = ProductReview::where('product_id',$product->id)->where('status',1)->sum('rating');
-        if($reviewsum){
-            $rating_avg = $reviewsum/$reviews->count();
-        }else{
-            $rating_avg = 0;
-        }
-        return view('front.singleproduct',compact('product','related_products','rating_avg','reviews'));
+        return view('front.singleproduct',compact('product','related_products'));
     }
 
 }

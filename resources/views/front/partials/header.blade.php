@@ -68,7 +68,7 @@
 
                 <a href="{{route('home')}}"><img alt="{{setting('site.title')}}" src="{{url('storage/'.setting('site.logo'))}}"/></a>
             </div>
-            <div class="col-xs-7 col-sm-7 header-search-box">
+            <div class="col-xs-6 col-sm-6 header-search-box">
                 <div class="aa-input-container" id="aa-input-container">
                     <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search Products"
                            name="search" autocomplete="on" />
@@ -125,6 +125,13 @@
                     </div>
                 </div>
                 @endif
+            </div>
+            <div id="wishlistblock" class="col-xs-1 col-sm-1 shopping-cart-box">
+                <a class="wishlist-link" href="{{route('wishlist.product.view')}}">
+                    <span><i class="fa fa-heart"></i></span>
+                    <span class="notify notify-left">
+                        {{Bhavinjr\Wishlist\Facades\Wishlist::count(Auth::id())}}</span>
+                </a>
             </div>
         </div>
 

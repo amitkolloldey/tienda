@@ -108,11 +108,7 @@
                                             @endif
                                         </div>
                                         <div class="button-group">
-                                            <a class="wishlist" href="#"><i class="fa fa-heart-o"></i>
-                                                <br>Wishlist</a>
-                                            <a class="compare" href="#"><i class="fa fa-signal"></i>
-                                                <br>
-                                                Compare</a>
+                                            <a title="Add to my wishlist" class="wishlist" href="{{route('wishlist.product.create',$product->id)}}"><i class="fa fa-heart-o"></i><br>Wishlist</a>
                                         </div>
                                     </div>
                                 </form>
@@ -125,14 +121,14 @@
                                 </div>
                             <div class="product-comments">
                                 <div class="product-star">
-                                    @if($rating_avg)
-                                        @if(is_float($rating_avg))
-                                        @for($i=0;$i <= floor($rating_avg) -1; $i++)
+                                    @if(starRatingCount($product->id)['rating_avg'])
+                                        @if(is_float(starRatingCount($product->id)))
+                                        @for($i=0;$i <= floor(starRatingCount($product->id)['rating_avg']) -1; $i++)
                                             <i class="fa fa-star"></i>
                                         @endfor
                                             <i class="fa fa-star-half-o"></i>
                                         @else
-                                            @for($i=0;$i <= $rating_avg; $i++)
+                                            @for($i=0;$i <= starRatingCount($product->id)['rating_avg']-1; $i++)
                                                 <i class="fa fa-star"></i>
                                             @endfor
                                         @endif
@@ -243,7 +239,7 @@
                                 </div>
                                 <div id="reviews" class="tab-panel">
                                     <div class="product-comments-block-tab">
-                                        @forelse($reviews as $review)
+                                        @forelse(starRatingCount($product->id)['reviews'] as $review)
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
                                                 <div class="grade" >

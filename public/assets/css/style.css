@@ -5507,11 +5507,11 @@ div#aa-input-container {
     width: 100%;
 }
 
-.col-xs-7.col-sm-7.header-search-box {
+.header-search-box {
     position: relative;
 }
 
-.col-xs-7.col-sm-7.header-search-box:after {
+.header-search-box:after {
     position:  absolute;
     height:  100%;
     width:  50px;
@@ -5547,4 +5547,20 @@ span.algolia-autocomplete {
     border:  none;
     border-radius:  0;
     margin-bottom: 20px;
+}
+div#wishlistblock {
+    height: 41px;
+    color: #fff;
+    text-align: center;
+    margin-right:  0;
+    margin-left: 0px;
+    display:  inline-block;
+}
+
+.wishlist-link i.fa.fa-heart {
+    color: #FF3366;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 12px;
+    margin-left: 30px;
 }

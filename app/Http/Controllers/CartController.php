@@ -62,8 +62,9 @@ class CartController extends Controller
             return back();
         }
         Cart::add(['id' => $pro_id, 'name' => $product->name, 'qty' => $request->qty ? $request->qty : 1, 'price' =>
-            $product->price])
+            $product->product->price ? $product->product->price : $product->product->sale_price])
             ->associate('App\Product');
+
         return back();
     }
 

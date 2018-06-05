@@ -43,11 +43,11 @@
                         @forelse($cartItems as $product)
                         <tr>
                             <td class="cart_product">
-                                <a href="{{$product->model->slug}}"><img src="{{url('storage/'.$product->model->image)
+                                <a href="{{route('single.product',$product->model->slug)}}"><img src="{{url('storage/'.$product->model->image)
                                 }}" alt="Product"></a>
                             </td>
                             <td class="cart_description">
-                                <p class="product-name"><a href="{{$product->model->slug}}">{{$product->name}} </a></p>
+                                <p class="product-name"><a href="{{route('single.product',$product->model->slug)}}">{{$product->name}} </a></p>
                                 <small class="cart_ref">Item Code : #{{$product->model->product_code}}</small><br>
                             </td>
                             <td class="cart_avail"><span class="label label-success">In stock</span></td>
