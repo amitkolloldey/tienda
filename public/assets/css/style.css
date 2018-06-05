@@ -1386,6 +1386,7 @@ span.notify-right{
     float: right;
     line-height: 49px;
     max-height: 50px;
+    margin-right: 10px;
 }
 
 .nav-menu .toggle-menu:before{
@@ -1395,19 +1396,7 @@ span.notify-right{
       color: #fff;
 }
 .floor-elevator{
-    width: 70px;
-    height: 50px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: url("../images/floor-elevator.png") no-repeat left center;
-    padding-left: 38px;
-    padding-right: 22px;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: normal;
-    color: #999;
-    padding-top: 7px;
+    display: none;
 }
 .floor-elevator .fa{
     font-weight: bold;
@@ -1587,13 +1576,9 @@ span.notify-right{
     width: 26%;
     float: right;
 }
-.header-top-right .header-banner img{
-  width: 100%;
-  height: auto;
-}
-.header-top-right .homeslider img{
+.header-top-right .homeslider img {
     width: 100%;
-    height: auto;
+    height: 450px;
 }
 .header-top-right .homeslider .bx-wrapper .bx-viewport {
   -moz-box-shadow: 0;
@@ -2308,7 +2293,6 @@ span.notify-right{
     float: right;
 }
 .product-featured .product-featured-content .product-featured-list{
-      margin-left: 234px;
       overflow: hidden;
 }
 .product-featured .banner-featured{

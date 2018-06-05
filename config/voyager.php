@@ -207,7 +207,7 @@ return [
     ],
 
     'additional_js' => [
-        //'js/custom.js',
+        'assets/js/nullable_relationship_hack.js',
     ],
 
     'googlemaps' => [

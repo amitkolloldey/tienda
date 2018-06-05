@@ -31,7 +31,6 @@
                                 @endif
                             </div>
                             <div class="pb-left-column col-xs-12 col-sm-6">
-
                                 <!-- product-imge-->
                                 <div class="product-image">
                                     <div class="product-full">
@@ -328,8 +327,7 @@
                                                              src="{{url('storage/').'/'.$product->image}}">
                                                     </a>
                                                     <div class="quick-view">
-                                                        <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                        <a title="Add to compare" class="compare" href="#"></a>
+                                                        <a title="Add to my wishlist" class="heart" href="{{route('wishlist.product.create',$product->id)}}"><i class="fa fa-heart-o"></i><br>Wishlist</a>
                                                         <a title="Quick view" class="search" href="#"
                                                            data-toggle="modal"
                                                            data-target="#quickview-{{$product->id}}"></a>

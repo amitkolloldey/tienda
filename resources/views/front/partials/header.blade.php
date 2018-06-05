@@ -40,8 +40,8 @@
                         <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                            href="#"><span>My Account</span></a>
                         <ul class="dropdown-menu mega_dropdown" role="menu">
-                            <li><a href="#">Compare</a></li>
-                            <li><a href="#">Wishlists</a></li>
+                            <li><a href="{{route('cart.index')}}">Cart</a></li>
+                            <li><a href="{{route('wishlist.product.view')}}">Wishlists</a></li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
