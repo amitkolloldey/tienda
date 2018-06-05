@@ -14,7 +14,6 @@ class Product extends Model
     protected $guarded=[];
 
 
-
     public function searchableAs()
     {
         return 'name';
@@ -37,4 +36,6 @@ class Product extends Model
     public function reviews(){
         return $this->hasMany('App\ProductReview');
     }
+
+
 }
