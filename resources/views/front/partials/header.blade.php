@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}"/>
     @yield('styles')
-
 </head>
 <body class="@yield('bodyclass')">
 <div id="header" class="header">

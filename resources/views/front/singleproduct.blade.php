@@ -1,6 +1,9 @@
 @extends('front.layout.template')
 @section('title') {{$product->name}} @endsection
 @section('bodyclass')product-page @endsection
+@section('styles')
+    <link rel="stylesheet" href="{{asset('assets/css/review.css')}}">
+@endsection
 @section('content')
 
     <div class="columns-container">
@@ -15,8 +18,20 @@
                     <!-- Product -->
 
                     <div id="product">
+
                         <div class="primary-box row">
+                            <div class="col-md-12">
+                                @if(count($errors) > 0)
+                                    @foreach ($errors->all() as $error)
+                                        <div class="alert-danger alert">{{ $error }}</div>
+                                    @endforeach
+                                @endif
+                                @if (Session::has('review_message'))
+                                    <div class="alert alert-info">{{ Session::get('review_message') }}</div>
+                                @endif
+                            </div>
                             <div class="pb-left-column col-xs-12 col-sm-6">
+
                                 <!-- product-imge-->
                                 <div class="product-image">
                                     <div class="product-full">
@@ -41,19 +56,8 @@
                             </div>
                             <div class="pb-right-column col-xs-12 col-sm-6">
                                 <h1 class="product-name">{{$product->name}}</h1>
-                                <div class="product-comments">
-                                    <div class="product-star">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </div>
-                                    <div class="comments-advices">
-                                        <a href="#">Based on 3 ratings</a>
-                                        <a href="#"><i class="fa fa-pencil"></i> write a review</a>
-                                    </div>
-                                </div>
+
+
                                 <div class="product-price-group">
                                     @if($product->sale_price)
                                         <span class="price product-price">${{$product->sale_price}}</span>
@@ -119,6 +123,81 @@
                                     <div class="network-share">
                                     </div>
                                 </div>
+                            <div class="product-comments">
+                                <div class="product-star">
+                                    @if($rating_avg)
+                                        @if(is_float($rating_avg))
+                                        @for($i=0;$i <= floor($rating_avg) -1; $i++)
+                                            <i class="fa fa-star"></i>
+                                        @endfor
+                                            <i class="fa fa-star-half-o"></i>
+                                        @else
+                                            @for($i=0;$i <= $rating_avg; $i++)
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        @endif
+                                    @endif
+                                </div>
+                                <div class="comments-advices">
+                                    Based on {{$product->reviews()->count()}} ratings
+                                    <a title="Write A Review" href="#"
+                                       data-toggle="modal"
+                                       data-target="#writereview-{{$product->id}}"><i class="fa fa-pencil"></i>
+                                        write a review</a>
+                                    <div id="writereview-{{$product->id}}" class="modal fade"
+                                         role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content review-body">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="review_title">
+                                                            <h2>Write A Review For "{{$product->name}}"</h2>
+                                                        </div>
+                                                        <form action="{{route('review.store')}}" method="post">
+                                                            {{csrf_field()}}
+                                                            <div class="form-group rating-stars">
+                                                                    <span class="star-cb-group">
+                                                                      <input type="radio" id="rating-5" name="rating"
+                                                                             value="5"/><label for="rating-5">5</label>
+                                                                      <input type="radio" id="rating-4" name="rating"
+                                                                             value="4" checked="checked"/><label
+                                                                                for="rating-4">4</label>
+                                                                      <input type="radio" id="rating-3" name="rating"
+                                                                             value="3"/><label for="rating-3">3</label>
+                                                                      <input type="radio" id="rating-2" name="rating"
+                                                                             value="2"/><label for="rating-2">2</label>
+                                                                      <input type="radio" id="rating-1" name="rating"
+                                                                             value="1"/><label for="rating-1">1</label>
+                                                                      <input type="radio" id="rating-0" name="rating"
+                                                                             value="0" class="star-cb-clear"/><label
+                                                                                for="rating-0">0</label>
+                                                                    </span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <textarea name="description" class="form-control" rows="5" placeholder="Write Your Review"></textarea>
+                                                                <input type="hidden" name="product_id"
+                                                                       value="{{$product->id}}">
+                                                                <input type="hidden" name="user_id"
+                                                                       value="{{Auth::id()}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-primary"
+                                                                >Submit
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                         <!-- tab product -->
@@ -164,54 +243,35 @@
                                 </div>
                                 <div id="reviews" class="tab-panel">
                                     <div class="product-comments-block-tab">
+                                        @forelse($reviews as $review)
                                         <div class="comment row">
                                             <div class="col-sm-3 author">
-                                                <div class="grade">
-                                                    <span>Grade</span>
-                                                    <span class="reviewRating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                <div class="grade" >
+                                                    <span style="display: block">{{$review->user->name}}</span>
+                                                    <span class="reviewRating" style="display: block">
+                                                        @for($i=0; $i<=$review->user->review->rating -1;$i++)
+                                                            <i class="fa fa-star"></i>
+                                                         @endfor
                                                     </span>
                                                 </div>
                                                 <div class="info-author">
-                                                    <span><strong>Jame</strong></span>
-                                                    <em>04/08/2015</em>
+                                                    <span><strong>{{$review->user->name}}</strong></span>
+                                                    <em>{{$review->created_at->diffForHumans()}}</em>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 commnet-dettail">
-                                                Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet
-                                                convallis
-                                                pulvinar
+                                               {{$review->description}}
                                             </div>
                                         </div>
-                                        <div class="comment row">
-                                            <div class="col-sm-3 author">
-                                                <div class="grade">
-                                                    <span>Grade</span>
-                                                    <span class="reviewRating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="info-author">
-                                                    <span><strong>Author</strong></span>
-                                                    <em>04/08/2015</em>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-9 commnet-dettail">
-                                                Phasellus accumsan cursus velit. Pellentesque egestas, neque sit amet
-                                                convallis
-                                                pulvinar
-                                            </div>
-                                        </div>
+                                        @empty
+                                            <p>No Review In This Product!</p>
+                                        @endforelse
                                         <p>
-                                            <a class="btn-comment" href="#">Write your review !</a>
+                                            <a title="Write A Review" href="#"
+                                               data-toggle="modal"
+                                               data-target="#writereview-{{$product->id}}" class="btn-comment"><i class="fa
+                                               fa-pencil"></i>
+                                                write a review</a>
                                         </p>
                                     </div>
 
@@ -381,4 +441,15 @@
             <!-- ./row-->
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        var logID = 'log',
+            log = $('<div id="' + logID + '"></div>');
+        $('body').append(log);
+        $('[type*="radio"]').change(function () {
+            var me = $(this);
+            log.html(me.attr('value'));
+        });
+    </script>
 @endsection

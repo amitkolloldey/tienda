@@ -5526,3 +5526,25 @@ span.algolia-autocomplete {
     width: 100%!important;
     min-width: 100%!important;
 }
+.modal-content.review-body {
+    padding: 20px;
+}
+
+.review_title {
+    margin-bottom: 20px;
+}
+
+.form-group.rating-stars {
+    margin-bottom: 20px;
+}
+
+.review-body textarea.form-control {
+    border-radius: 0;
+}
+
+.review-body button.btn.btn-primary {
+    background:  #FF3366;
+    border:  none;
+    border-radius:  0;
+    margin-bottom: 20px;
+}
