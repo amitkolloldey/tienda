@@ -6,8 +6,8 @@
 <ul>
     <li>Multilevel Category</li>
     <li>Category Page</li>
-    <li>Shop Pag</li>
-    <li>User Order Pag</li>
+    <li>Shop Page</li>
+    <li>User Order Page</li>
     <li>Coupons</li>
     <li>Checkout</li>
     <li>Cash on Delivery</li>
